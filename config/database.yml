@@ -1,0 +1,20 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+  username: <%= ENV['PG_USER'] %>
+  password: <%= ENV['PG_PASSWORD'] %>
+
+development:
+  <<: *default
+  database: watch2u_development
+  host: localhost
+
+test:
+  <<: *default
+  database: watch2u_test
+  host: localhost
+
+production:
+  <<: *default
+  database: watch2u_production

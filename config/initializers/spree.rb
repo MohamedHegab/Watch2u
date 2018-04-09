@@ -17,3 +17,4 @@ end
 
 Spree.user_class = "Spree::User"
 Spree::Auth::Config[:signout_after_password_change] = true
+# Spree::PermittedAttributes.user_attributes.push :name, :phone

@@ -127,6 +127,7 @@ GEM
       thor (>= 0.14, < 2.0)
     jquery-ui-rails (6.0.1)
       railties (>= 3.2.16)
+    jwt (1.5.6)
     kaminari (1.0.1)
       activesupport (>= 4.1.0)
       kaminari-actionview (= 1.0.1)
@@ -354,17 +355,18 @@ DEPENDENCIES
   coffee-rails (~> 4.2)
   dotenv (~> 2.2, >= 2.2.1)
   jbuilder (~> 2.5)
+  jwt (~> 1.5, >= 1.5.4)
   listen (>= 3.0.5, < 3.2)
   pg (~> 0.18)
   puma (~> 3.7)
   rails (~> 5.1.4)
   sass-rails (~> 5.0)
   selenium-webdriver
-  spree_api
+  spree_api (~> 3.4.4)
   spree_auth_devise (~> 3.3)
-  spree_backend
-  spree_cmd
-  spree_core
+  spree_backend (~> 3.4.4)
+  spree_cmd (~> 3.4.4)
+  spree_core (~> 3.4.4)
   spree_gateway (~> 3.3)
   spring
   spring-watcher-listen (~> 2.0.0)

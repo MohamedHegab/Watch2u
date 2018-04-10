@@ -1,12 +1,23 @@
+require 'api_constraint'
+
 Rails.application.routes.draw do
-  # This line mounts Spree's routes at the root of your application.
-  # This means, any requests to URLs such as /products, will go to
-  # Spree::ProductsController.
-  # If you would like to change where this engine is mounted, simply change the
-  # :at option to something different.
-  #
-  # We ask that you don't use the :as option here, as Spree relies on it being
-  # the default of "spree".
-  mount Spree::Core::Engine, at: '/'
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+
+  get 'home/index'
+  
+
+  scope "(:locale)", locale: /#{I18n.available_locales.join('|')}/ do
+    namespace :api, defaults: {format: 'json'} do
+      namespace :v1, constraint: ApiConstraint.new(version: 1, default: true) do
+        resources :users, :only => [:show, :create, :update, :destroy] do
+          collection do
+            get :create_guest
+          end
+        end
+        resources :sessions, only: [:create, :destroy]
+        post 'users/signup' => 'users#create'
+        post 'users/signin' => 'sessions#create'
+      end
+    end
+  end
+  devise_for :users
 end

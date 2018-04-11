@@ -23,6 +23,7 @@ gem 'ransack'
 gem 'enumerize'
 gem 'rest-client', '~> 2.0', '>= 2.0.2'
 gem 'config'
+gem 'activeadmin'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]

@@ -8,3 +8,5 @@
 
 Spree::Core::Engine.load_seed if defined?(Spree::Core)
 Spree::Auth::Engine.load_seed if defined?(Spree::Auth)
+
+AdminUser.create!(email: 'admin@admin.com', password: '123123', password_confirmation: '123123') if Rails.env.development?

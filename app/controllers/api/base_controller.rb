@@ -12,13 +12,21 @@ class Api::BaseController < ApplicationController
     current_user.present?
   end
 
+  def trim_string st, all = nil
+      if all.nil?
+        st = st.gsub(/ +/, " ")
+      else
+        st = st.gsub(/\s+/, "")
+      end
+    end
+
   def render_success(action, status = :ok, message=nil, resource=nil)
     @response = {success: true, message: message, resource: resource}
     if action.is_a? Symbol
       render action, layout: 'jsend', status: status
     else
       @response = {success: true, data: action, message: message, code: :ok}
-      render :partial => 'api/errors', layout: 'jsend', status: :ok, :formats => [:json]
+      render :partial => 'api/v1/errors', layout: 'jsend', status: :ok, :formats => [:json]
     end
   end
 
@@ -29,12 +37,12 @@ class Api::BaseController < ApplicationController
 
   def render_fail(message, code=2001, data={})
     @response = {fail: true, message: message, code: code}
-    render :partial => 'api/errors', layout: 'jsend', status: :ok, :formats => [:json]
+    render :partial => 'api/v1/errors', layout: 'jsend', status: :ok, :formats => [:json]
   end
 
   def render_error(message, code=2000, data={})
     @response = {error: true, message: message, code: code}
-    render :partial => 'api/errors', layout: 'jsend', status: :ok, :formats => [:json]
+    render :partial => 'api/v1/errors', layout: 'jsend', status: :ok, :formats => [:json]
   end
 
   private
@@ -59,7 +67,5 @@ class Api::BaseController < ApplicationController
     else
       false
     end
-
   end
-
 end

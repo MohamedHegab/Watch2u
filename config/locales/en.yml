@@ -1,33 +1,62 @@
-# Files in the config/locales directory are used for internationalization
-# and are automatically loaded by Rails. If you want to use locales other
-# than English, add the necessary files in this directory.
-#
-# To use the locales, use `I18n.t`:
-#
-#     I18n.t 'hello'
-#
-# In views, this is aliased to just `t`:
-#
-#     <%= t('hello') %>
-#
-# To use a different locale, set it with `I18n.locale`:
-#
-#     I18n.locale = :es
-#
-# This would use the information in config/locales/es.yml.
-#
-# The following keys must be escaped otherwise they will not be retrieved by
-# the default I18n backend:
-#
-# true, false, on, off, yes, no
-#
-# Instead, surround them with single quotes.
-#
-# en:
-#   'true': 'foo'
-#
-# To learn more, please read the Rails Internationalization guide
-# available at http://guides.rubyonrails.org/i18n.html.
-
 en:
-  hello: "Hello world"
+  text:
+    account_not_active: account not active, Check your email for activation
+    block_can_not_be_done_user_already_blocked: Block can not be done user already blocked
+    can_not_find_user: Can not find user
+    cant_find_comment_in_this_challenge_id: Cant find comment in this challenge
+    challenge_can_not_be_created: Challenge can not be created
+    challenge_can_not_be_created_there_is_changes_in_reply_challenge: Challenge can not be created there is changes in reply challenge
+    challenge_can_not_be_created_you_able_to_change_in_description: Challenge can not be created you able to change in description
+    challenge_can_not_be_deleted: Challenge can not be deleted
+    comment_can_not_be_created: Comment can not be created
+    comment_can_not_be_deleted: Comment can not be deleted
+    comment_can_not_be_updated: Comment can not be updated
+    comment_is_blocked: Comment is blocked
+    current_user_blocked_to_make_a_comment: Current user blocked to make a Comment
+    current_user_blocked_to_make_a_reaction: Current user blocked to make a Reaction
+    current_user_not_authorized_to_update_this_reaction: Current User Not authorized to update this reaction
+    email_already_exist: Email already exist
+    email_not_registered: Email not registered
+    email_or_password_invalid: email or password invalid
+    event_can_not_be_created: Event can not be created
+    event_can_not_be_deleted: Event can not be deleted
+    event_can_not_be_updated: Event can not be updated
+    event_category_can_not_be_created: Event category can not be created
+    event_category_can_not_be_deleted: Event category can not be deleted
+    follow_can_not_be_done: Follow can not be done, The Current User already follow this User
+    invalid_activation_code: Invalid activation code
+    invalid_api_key: Invalid api key
+    it_is_not_a_social_user: It is not a social user
+    login_failed: Login failed
+    login_successful: Login successful
+    login_successful_with_social: login successful with social
+    logout_successful: Logout successful
+    password_changed: Password changed
+    reaction_can_not_be_created: Reaction can not be created
+    reaction_can_not_be_deleted: Reaction can not be deleted
+    reaction_can_not_be_updated: Reaction can not be updated
+    report_must_have_reason: Report must have reason
+    report_sended: Report sended
+    setting_can_not_be_created: Setting can not be created
+    setting_can_not_be_deleted: Setting can not be deleted
+    setting_can_not_be_updated: Setting can not be updated
+    this_social_account_exist_with_another_email: This Social account exist with another email
+    unblock_can_not_be_done: Unblock can not be done
+    unfollow_can_not_be_done: Unfollow can not be done
+    updating_social_access_token_faild: updating social access token faild
+    user_already_exists: User already exists
+    user_can_not_be_created: User can not be created
+    user_can_not_be_logged_in: User can not be logged in
+    user_can_not_be_updated: User can not be updated
+    user_can_not_be_updated_email_cannot_be_changes: User can not be updated, Email cannot be changes
+    user_can_not_block_him_self: User can not block him self
+    user_can_not_change_password: User can not change password
+    user_can_not_change_password_current_password_not_correct: User can not change password current password not correct
+    user_can_not_follow_him_self: User can not follow him self
+    user_can_not_report_his_challenge: User can not report his challenge
+    user_follower_list: User follower list
+    user_followings_list: User followings list
+    user_not_found: User not found
+    user_password_can_not_be_updated: User password can not be updated
+    you_must_be_logged_in: You must be logged in
+

@@ -1,11 +1,8 @@
 class Api::V1::SessionsController < Api::BaseController
 
   def create
-    user_password = params[:user][:password]
-    user_mobile_number = params[:user][:mobile_number]
-    user = user_mobile_number.present? && User.find_by(mobile_number: user_mobile_number)
-
-    if user.present? && user.valid_password?(user_password)
+    user = User.where(email: params[:user][:email]).first
+    if user&.user.valid_password?(params[:password])
       sign_in user, store: false
       user.generate_authentication_token!
       user.save

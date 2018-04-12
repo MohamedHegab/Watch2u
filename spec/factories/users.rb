@@ -31,10 +31,17 @@
 #  updated_at             :datetime         not null
 #
 
-require 'test_helper'
-
-class UserTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+FactoryBot.define do
+  factory :user do
+    email FFaker::Internet.email
+    first_name FFaker::Name.first_name
+    last_name FFaker::Name.last_name
+    password 'MyPassword123'
+    password_confirmation 'MyPassword123'
+    mobile FFaker::PhoneNumberAU.mobile_phone_number
+    code FFaker::PhoneNumberAU.country_code
+    gender FFaker::Gender.random
+    address FFaker::Address.street_address
+    region FFaker::Address.city
+  end
 end

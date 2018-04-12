@@ -1,0 +1,13 @@
+#global config
+# google_firebase_api_key: AIzaSyClVH2A8x6gks2n7XN7rMLvfVMPUu3Ew0s
+# dynamic_link:
+#   app_code: fyr9w
+#   #canyo ios app
+#   ios_app_bundle_id: com.twoloops.canyo
+#   ios_app_store_id: 1323515054
+#   ios_app_id_prefix: HYY6RF787F
+
+#   #canyo android app
+#   android_app_package_name: com.twoloops.canyo
+# public_profile: public_profile
+# push_notification: send_notification

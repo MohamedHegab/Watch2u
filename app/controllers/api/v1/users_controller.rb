@@ -1,16 +1,16 @@
 class Api::V1::UsersController < Api::BaseController
   respond_to :json
 
+  before_action :set_user, only: [:show, :update]
+
+
   def show
-    respond_with User.find(params[:id])
+    render_success(:show, :ok)
   end
 
   def create
     @user = User.new(user_params)
-    @user.email = trim_string(@user.email, true)
-    @user.first_name = trim_string(@user.first_name) if @user.first_name.present?
-    @user.last_name = trim_string(@user.last_name) if @user.last_name.present?
-    @user.email = @user.email.downcase
+    
     if @user.valid? && @user.save
       UserMailer.welcome_email(@user).deliver_later
       render_success(:show, :created)
@@ -20,9 +20,6 @@ class Api::V1::UsersController < Api::BaseController
   end
 
   def update
-    @user = @current_user
-    @user.first_name = trim_string(params[:user][:first_name]) if params[:user][:first_name].present?
-    @user.last_name = trim_string(params[:user][:last_name]) if params[:user][:last_name].present?
     email = params[:user][:email]
     if email.present?
       if @user.email != email
@@ -43,19 +40,23 @@ class Api::V1::UsersController < Api::BaseController
     head 204
   end
 
-  def create_guest
-    user = User.new
-    unless user.save(validate: false)
-      render json: {status: 'fail', data: user, message: user.errors.full_messages.first}
-    else
-      render json: {status: 'success', data: user, message: t('created_successfully')}
-    end
-  end
+  # def create_guest
+  #   user = User.new
+  #   unless user.save(validate: false)
+  #     render json: {status: 'fail', data: user, message: user.errors.full_messages.first}
+  #   else
+  #     render json: {status: 'success', data: user, message: t('created_successfully')}
+  #   end
+  # end
 
   private
 
   def user_params
-    params.require(:user).permit(:email, :mobile, :code, :region, :address, :first_name, :last_name, :password, :password_confirmation )
+    params.require(:user).permit(:email, :mobile, :code, :region, :address, :first_name, :last_name, :password, :password_confirmation, :gender )
+  end
+
+  def set_user
+    @user = User.find(params[:id])
   end
 
 end

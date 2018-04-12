@@ -13,12 +13,12 @@ class Api::BaseController < ApplicationController
   end
 
   def trim_string st, all = nil
-      if all.nil?
-        st = st.gsub(/ +/, " ")
-      else
-        st = st.gsub(/\s+/, "")
-      end
+    if all.nil?
+      st = st.gsub(/ +/, " ")
+    else
+      st = st.gsub(/\s+/, "")
     end
+  end
 
   def render_success(action, status = :ok, message=nil, resource=nil)
     @response = {success: true, message: message, resource: resource}
@@ -32,7 +32,7 @@ class Api::BaseController < ApplicationController
 
   def render_validation_error(action, message, code=1)
     @response = {fail: true, message: message, code: code}
-    render action, layout: 'jsend', status: :ok
+    render action, layout: 'jsend', status: 422
   end
 
   def render_fail(message, code=2001, data={})

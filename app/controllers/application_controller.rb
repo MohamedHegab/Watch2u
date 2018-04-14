@@ -3,6 +3,12 @@ class ApplicationController < ActionController::Base
   include Response
   include ExceptionHandler
 
+  rescue_from CanCan::AccessDenied do |exception|
+    respond_to do |format|
+      format.json { render json: {message: 'Don\'t have authorization', status: :forbidden} }
+    end
+  end
+
   protected
 
   def configure_permitted_parameters

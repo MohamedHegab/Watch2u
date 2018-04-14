@@ -63,9 +63,6 @@ Rails.application.routes.draw do
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
 
-  get 'home/index'
-  
-
   scope "(:locale)", locale: /#{I18n.available_locales.join('|')}/ do
     namespace :api, defaults: {format: 'json'} do
       namespace :v1 do
@@ -76,6 +73,11 @@ Rails.application.routes.draw do
           end
         end
         resources :sessions, only: [:create, :destroy]
+        resources :categories do
+          resources :sub_categories do 
+            resources :products
+          end
+        end
         post 'users/signup' => 'users#create'
         post 'users/signin' => 'sessions#create'
         post 'password/forgot', to: 'password#forgot'

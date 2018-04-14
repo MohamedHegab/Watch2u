@@ -1,0 +1,1 @@
+json.array! @sub_categories, partial: 'api/v1/sub_categories/sub_category', as: :sub_category

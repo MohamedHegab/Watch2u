@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180414080429) do
+ActiveRecord::Schema.define(version: 20180414215807) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -48,6 +48,35 @@ ActiveRecord::Schema.define(version: 20180414080429) do
     t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
   end
 
+  create_table "categories", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name", default: "", null: false
+    t.string "image_file_name"
+    t.string "image_content_type"
+    t.integer "image_file_size"
+    t.datetime "image_updated_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "slug"
+    t.index ["name"], name: "index_categories_on_name"
+    t.index ["slug"], name: "index_categories_on_slug", unique: true
+  end
+
+  create_table "products", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name", default: "", null: false
+    t.text "description", default: "", null: false
+    t.float "price", null: false
+    t.integer "discount"
+    t.uuid "sub_category_id"
+    t.uuid "category_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "slug"
+    t.index ["category_id"], name: "index_products_on_category_id"
+    t.index ["name", "sub_category_id", "category_id"], name: "index_products_on_name_and_sub_category_id_and_category_id"
+    t.index ["slug"], name: "index_products_on_slug", unique: true
+    t.index ["sub_category_id"], name: "index_products_on_sub_category_id"
+  end
+
   create_table "roles", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.string "resource_type"
@@ -56,6 +85,21 @@ ActiveRecord::Schema.define(version: 20180414080429) do
     t.datetime "updated_at", null: false
     t.index ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id"
     t.index ["resource_type", "resource_id"], name: "index_roles_on_resource_type_and_resource_id"
+  end
+
+  create_table "sub_categories", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name", default: "", null: false
+    t.string "image_file_name"
+    t.string "image_content_type"
+    t.integer "image_file_size"
+    t.datetime "image_updated_at"
+    t.uuid "category_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "slug"
+    t.index ["category_id"], name: "index_sub_categories_on_category_id"
+    t.index ["name", "category_id"], name: "index_sub_categories_on_name_and_category_id"
+    t.index ["slug"], name: "index_sub_categories_on_slug", unique: true
   end
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -100,4 +144,7 @@ ActiveRecord::Schema.define(version: 20180414080429) do
     t.index ["user_id"], name: "index_users_roles_on_user_id"
   end
 
+  add_foreign_key "products", "categories"
+  add_foreign_key "products", "sub_categories"
+  add_foreign_key "sub_categories", "categories"
 end

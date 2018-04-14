@@ -1,4 +1,10 @@
 en:
+  unauthorized:
+    manage:
+      all: "Not authorized to %{action} %{subject}."
+      user: "Not allowed to manage other user accounts."
+    update:
+      project: "Not allowed to update this project."
   text:
     account_not_active: account not active, Check your email for activation
     block_can_not_be_done_user_already_blocked: Block can not be done user already blocked
@@ -60,3 +66,15 @@ en:
     user_password_can_not_be_updated: User password can not be updated
     you_must_be_logged_in: You must be logged in
 
+  category:
+    category_can_not_be_created: 'Category cannot be created'
+    category_can_not_be_deleted: 'Category cannot be deleted'
+    category_can_not_be_updated: 'Category cannot be updated'
+  sub_category:
+    sub_category_can_not_be_created: 'SubCategory cannot be created'
+    sub_category_can_not_be_deleted: 'SubCategory cannot be deleted'
+    sub_category_can_not_be_updated: 'SubCategory cannot be updated'
+  product:
+    product_can_not_be_created: 'Product cannot be created'
+    product_can_not_be_deleted: 'Product cannot be deleted'
+    product_can_not_be_updated: 'Product cannot be updated'

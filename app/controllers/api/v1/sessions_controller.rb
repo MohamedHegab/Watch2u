@@ -4,7 +4,6 @@ class Api::V1::SessionsController < Api::BaseController
     user = User.where(email: params[:user][:email]).first
     if user&.valid_password?(params[:user][:password])
       sign_in user, store: false
-      byebug
       user.generate_authentication_token!
       user.save
       render json: {status: 'success', data: user}

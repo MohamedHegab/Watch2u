@@ -37,7 +37,7 @@ class Api::BaseController < ApplicationController
 
   def render_fail(message, code=2001, data={})
     @response = {fail: true, message: message, code: code}
-    render :partial => 'api/v1/errors', layout: 'jsend', status: :ok, :formats => [:json]
+    render :partial => 'api/v1/errors', layout: 'jsend', status: 422, :formats => [:json]
   end
 
   def render_error(message, code=2000, data={})

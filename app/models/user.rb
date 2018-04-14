@@ -44,6 +44,7 @@ class User < ApplicationRecord
   ############## Validations #################
   validates_presence_of :first_name, :last_name, :mobile, :code, :gender
   validates_uniqueness_of :mobile, :email
+  validates :auth_token, uniqueness: true
   validates :gender, inclusion: { in: ['male', 'female'] }
   enumerize :role_input, in: {customer: 0, sales: 1, admin: 2}, scope: true
 

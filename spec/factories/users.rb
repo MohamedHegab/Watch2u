@@ -44,5 +44,6 @@ FactoryBot.define do
     gender FFaker::Gender.random
     address FFaker::Address.street_address
     region FFaker::Address.city
+    auth_token "ourToken"
   end
 end

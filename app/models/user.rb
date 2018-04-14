@@ -29,9 +29,13 @@
 #  locked_at              :datetime
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
+#  auth_token             :string
 #
 
 class User < ApplicationRecord
+  extend Enumerize
+  rolify
+  attr_accessor :role_input
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -41,10 +45,12 @@ class User < ApplicationRecord
   validates_presence_of :first_name, :last_name, :mobile, :code, :gender
   validates_uniqueness_of :mobile, :email
   validates :gender, inclusion: { in: ['male', 'female'] }
+  enumerize :role_input, in: {customer: 0, sales: 1, admin: 2}, scope: true
 
   ############## Callbacks #################
   before_create :fix_attributes
   before_update :fix_attributes
+  before_create :assign_role
 
   ############## Methods #################
 
@@ -63,6 +69,18 @@ class User < ApplicationRecord
       st = st.gsub(/ +/, " ")
     else
       st = st.gsub(/\s+/, "")
+    end
+  end
+
+  def generate_authentication_token!
+    begin
+      self.auth_token = Devise.friendly_token
+    end while self.class.exists?(auth_token: auth_token)
+  end
+
+  def assign_role
+    if self.role_input && !self.has_role?(self.role_input)
+      self.add_role role_input
     end
   end
 end

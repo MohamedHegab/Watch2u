@@ -7,5 +7,6 @@ json.mobile user.mobile
 json.gender user.gender
 json.region user.region
 json.address user.address
+json.auth_token user.auth_token
 json.partial! 'api/v1/validation_error', object: user
 

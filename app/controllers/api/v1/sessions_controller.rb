@@ -2,20 +2,24 @@ class Api::V1::SessionsController < Api::BaseController
 
   def create
     user = User.where(email: params[:user][:email]).first
-    if user&.user.valid_password?(params[:password])
+    if user&.valid_password?(params[:user][:password])
       sign_in user, store: false
       user.generate_authentication_token!
       user.save
       render json: {status: 'success', data: user}
+      # render_success(:create, :ok, nil, user)
     else
-      render json: {status: 'fail', data: nil, message: 'invalid user name or password ' }
+      render_fail('invalid user name or password')
     end
   end
 
   def destroy
-    user = User.find_by(auth_token: params[:id])
-    user.generate_authentication_token!
-    user.save
-    head 204
+    authenticate_with_token!
+    if current_user
+      current_user.generate_authentication_token!
+      current_user.save
+      head 204
+      render json: {status: 'success', data: user}
+    end
   end
 end

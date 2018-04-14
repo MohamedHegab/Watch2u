@@ -14,7 +14,6 @@ gem 'coffee-rails', '~> 4.2'
 gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.5'
 gem 'devise', '~> 4.4', '>= 4.4.3'
-gem 'rails_admin', '~> 1.3'
 gem 'dotenv', '~> 2.2', '>= 2.2.1'
 gem 'jwt', '~> 1.5', '>= 1.5.4'
 gem 'paperclip'
@@ -24,6 +23,8 @@ gem 'enumerize'
 gem 'rest-client', '~> 2.0', '>= 2.0.2'
 gem 'config'
 gem 'activeadmin'
+gem 'cancancan'
+gem 'rolify'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]

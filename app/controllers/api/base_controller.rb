@@ -5,7 +5,7 @@ class Api::BaseController < ApplicationController
   protect_from_forgery with: :null_session
 
   def authenticate_with_token!
-    render json: {status: 'fail', message: 'Not Authorized'}, status: 401   unless user_signed_in?
+    render_fail('Not Authorized') unless user_signed_in?
   end
 
   def user_signed_in?

@@ -1,8 +1,8 @@
 class Api::V1::UsersController < Api::BaseController
   respond_to :json
 
+  before_action :authenticate_with_token!, except: [:create]
   before_action :set_user, only: [:show, :update]
-
 
   def show
     render_success(:show, :ok)

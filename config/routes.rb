@@ -78,6 +78,8 @@ Rails.application.routes.draw do
         resources :sessions, only: [:create, :destroy]
         post 'users/signup' => 'users#create'
         post 'users/signin' => 'sessions#create'
+        post 'password/forgot', to: 'password#forgot'
+        post 'password/reset', to: 'password#reset'
       end
     end
   end

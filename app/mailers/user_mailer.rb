@@ -13,7 +13,8 @@ class UserMailer < ApplicationMailer
     new_email ||= user.email
     return if new_email.nil?
     @user = user
-    @reset_password_url = Google::DynamicLink.generate_link(edit_user_password_path(:reset_token => @user.reset_password_token))
+    # @reset_password_url = Google::DynamicLink.generate_link(user_confirmation_url(:confirmation_token => @user.confirmation_token))
+    @reset_password_url = user_confirmation_url(:confirmation_token => @user.confirmation_token)
     mail(to: new_email, subject: 'watch2you Reset Password')
   end
 end

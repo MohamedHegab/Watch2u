@@ -9,13 +9,18 @@ pipelines:
       - step:
           script: # Modify the commands below to build your repository.
             - export DATABASE_URL=postgresql://test_user:test_user_password@localhost/pipelines
+            - apt-get update
+            - apt-get install -y build-essential libpq-dev nodejs
             - bundle install
-            - rake db:setup
-            - rake db:test:prepare
-            - rspec
+            - bundle exec rake db:setup
+            - bundle exec rake db:test:prepare
+            - bundle exec rake db:migrate RAILS_ENV=test 
+            - bundle exec rspec
           services:
             - postgres
- 
+          deployment:
+            - test
+
 definitions:
   services:
     postgres:

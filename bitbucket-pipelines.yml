@@ -19,7 +19,7 @@ pipelines:
           services:
             - postgres
           deployment:
-            - test
+            test
 
 definitions:
   services:

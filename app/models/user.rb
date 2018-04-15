@@ -43,7 +43,7 @@ class User < ApplicationRecord
 
   ############## Validations #################
   validates_presence_of :first_name, :last_name, :mobile, :code, :gender
-  validate :role_input, :on => :create
+  validate :role_input, on: :create
   validates_uniqueness_of :mobile, :email
   validates :auth_token, uniqueness: true
   validates :gender, inclusion: { in: ['male', 'female'] }
@@ -60,6 +60,7 @@ class User < ApplicationRecord
     self.email = trim_string(self.email.downcase, true)
     self.first_name = trim_string(self.first_name)
     self.last_name = trim_string(self.last_name)
+    generate_authentication_token!
   end
 
   def username

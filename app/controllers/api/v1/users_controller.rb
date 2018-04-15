@@ -10,7 +10,7 @@ class Api::V1::UsersController < Api::BaseController
 
   def create
     @user = User.new(user_params)
-    
+    byebug
     if @user.valid? && @user.save
       UserMailer.welcome_email(@user).deliver_later
       render_success(:show, :created)

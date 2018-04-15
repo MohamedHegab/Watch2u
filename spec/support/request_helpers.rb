@@ -9,6 +9,11 @@ module Request
   	def api_key
 	  	request.headers['ApiKey'] = "key=1d7801c576b33db841d59216d8cf91d4" 
 		end
+
+    def api_authorize(auth_key)
+      request.headers['Authorization'] = auth_key
+    end
+
     def api_response_format(format = Mime[:json])
       request.headers['Accept'] = "#{format}"
       request.headers['Content-Type'] = format.to_s

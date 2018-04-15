@@ -2,9 +2,10 @@ describe Api::V1::SessionsController do
 
   describe "POST #create" do
 
-   before(:each) do
-    @user = FactoryBot.create :user
-   end
+    before(:each) do
+      @user = FactoryBot.create :user
+      @user.confirm
+    end
 
     context "when the credentials are correct" do
 
@@ -15,10 +16,10 @@ describe Api::V1::SessionsController do
 
       it "returns the user record corresponding to the given credentials" do
         @user.reload
-        expect(json_response[:auth_token]).to eql @user.auth_token
+        expect(json_response[:data][:auth_token]).to eql @user.auth_token
       end
 
-      # it { should respond_with 200 }
+      it { should respond_with 200 }
     end
 
     context "when the credentials are incorrect" do

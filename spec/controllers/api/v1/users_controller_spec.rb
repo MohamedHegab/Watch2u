@@ -2,6 +2,7 @@ describe Api::V1::UsersController, type: :controller do
   describe "GET #show" do
     before(:each) do
       @user = FactoryBot.create :user
+      api_authorize(@user.auth_token)
       get :show, params: { id: @user.id }
     end
 
@@ -56,6 +57,7 @@ describe Api::V1::UsersController, type: :controller do
     context "when is successfully updated" do
       before(:each) do
         @user = FactoryBot.create :user
+        api_authorize(@user.auth_token)
         @gender = 'female'
         patch :update, params: { id: @user.id,
                          user: { gender: @gender } }
@@ -72,6 +74,7 @@ describe Api::V1::UsersController, type: :controller do
     context "when is not created" do
       before(:each) do
         @user = FactoryBot.create :user
+        api_authorize(@user.auth_token)
         patch :update, params: { id: @user.id,
                          user: { gender: "ss" } }
       end

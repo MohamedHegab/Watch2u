@@ -52,7 +52,7 @@ class Api::V1::UsersController < Api::BaseController
   private
 
   def user_params
-    params.require(:user).permit(:email, :mobile, :code, :region, :address, :first_name, :last_name, :password, :password_confirmation, :gender )
+    params.require(:user).permit(:email, :mobile, :code, :region, :address, :first_name, :last_name, :password, :password_confirmation, :gender, :role_input )
   end
 
   def set_user

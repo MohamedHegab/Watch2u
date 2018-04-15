@@ -1,6 +1,15 @@
 image: ruby:2.4.0
+
+clone:
+  depth: 3  
+
 pipelines:
-  default:
-    - step:
-      script:
-        - ruby -v
+  branches:
+    master:
+      - step:
+          script: # Modify the commands below to build your repository.
+            - apt-get update
+            - apt-get install -y build-essential libpq-dev nodejs
+            - bundle install
+            - bundle exec rake db:migrate RAILS_ENV=test 
+            - bundle exec rspec

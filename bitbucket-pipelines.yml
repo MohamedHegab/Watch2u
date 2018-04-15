@@ -8,7 +8,7 @@ pipelines:
     master:
       - step:
           script: # Modify the commands below to build your repository.
-            - export DATABASE_URL=postgresql://test_user:test_user_password@localhost/pipelines
+            - export DATABASE_URL=postgresql://POSTGRES_USER:POSTGRES_PASSWORD@localhost/pipelines
             - apt-get update
             - apt-get install -y build-essential libpq-dev nodejs
             - bundle install
@@ -26,5 +26,5 @@ definitions:
       image: postgres
       environment:
         POSTGRES_DB: pipelines
-        POSTGRES_USER: <%= ENV['PG_USER'] %>
-        POSTGRES_PASSWORD: <%= ENV['PG_PASSWORD'] %>
+        POSTGRES_USER: root
+        POSTGRES_PASSWORD: 654321

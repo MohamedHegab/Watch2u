@@ -5,6 +5,7 @@ class Api::BaseController < ApplicationController
   protect_from_forgery with: :null_session
 
   def authenticate_with_token!
+    # byebug
     render_fail('Not Authorized') unless user_signed_in?
   end
 

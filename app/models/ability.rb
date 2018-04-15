@@ -13,7 +13,7 @@ class Ability
       can :manage, SubCategory
       can :manage, Product
     elsif user.has_role? :customer
-      can :read, Category
+      can [:show, :index] , Category
       can :read, SubCategory
       can :read, Product
     end

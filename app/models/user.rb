@@ -42,7 +42,8 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable,:confirmable
 
   ############## Validations #################
-  validates_presence_of :first_name, :last_name, :mobile, :code, :gender, :role_input
+  validates_presence_of :first_name, :last_name, :mobile, :code, :gender
+  validate :role_input, :on => :create
   validates_uniqueness_of :mobile, :email
   validates :auth_token, uniqueness: true
   validates :gender, inclusion: { in: ['male', 'female'] }

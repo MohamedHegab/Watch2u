@@ -14,8 +14,6 @@ test:
   <<: *default
   database: watch2u_test
   host: localhost
-  username: test_user
-  password: test_user_password
 
 production:
   <<: *default

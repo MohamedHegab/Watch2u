@@ -4,7 +4,7 @@ describe Api::V1::SessionsController do
 
     before(:each) do
       @user = FactoryBot.create :user
-      @user.confirm
+      # @user.confirm
     end
 
     context "when the credentials are correct" do

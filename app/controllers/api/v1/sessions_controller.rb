@@ -6,8 +6,8 @@ class Api::V1::SessionsController < Api::BaseController
       sign_in user, store: false
       user.generate_authentication_token!
       user.save
-      render json: {status: 'success', data: user}
-      # render_success(:create, :ok, nil, user)
+      # render json: {status: 'success', data: user}
+      render_success(nil, :ok, "user is signed in", user)
     else
       render_fail('invalid email or password')
     end
@@ -18,8 +18,10 @@ class Api::V1::SessionsController < Api::BaseController
     if current_user
       current_user.generate_authentication_token!
       current_user.save
-      head 204
-      render json: {status: 'success', data: user}
+      # render_success(nil, 204, "user signed out succefully", current_user)
+      render json: {status: 'success', data: current_user}
+    else
+      # render_fail('There is no user signed in')
     end
   end
 end

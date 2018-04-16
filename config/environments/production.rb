@@ -45,7 +45,7 @@ Rails.application.configure do
     authentication: :login,
     enable_starttls_auto: true,
     user_name:  'amssolutions20@gmail.com',
-    password:   ENV['GMAIL_PASSWORD']
+    password:   'Otamora&old'
   }
 
   # `config.assets.precompile` and `config.assets.version` have moved to config/initializers/assets.rb

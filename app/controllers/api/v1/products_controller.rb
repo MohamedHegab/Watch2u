@@ -17,7 +17,7 @@ class Api::V1::ProductsController < Api::BaseController
 	end
 
 	def show
-		
+    render_success(:show, :ok, nil, @product)
 	end
 
 	def update

@@ -17,7 +17,7 @@ class Api::V1::SubCategoriesController < Api::BaseController
 	end
 
 	def show
-		
+    render_success(:show, :ok, nil, @sub_category)
 	end
 
 	def update
@@ -53,7 +53,7 @@ class Api::V1::SubCategoriesController < Api::BaseController
 	end
 
 	def set_sub_category
-    @sub_category = @category.sub_category.find(params[:id])
+    @sub_category = @category.sub_categories.find(params[:id])
   end
 
 	def sub_category_params

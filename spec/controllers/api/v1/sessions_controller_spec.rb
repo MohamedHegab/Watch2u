@@ -3,7 +3,7 @@ describe Api::V1::SessionsController do
   describe "POST #create" do
 
     before(:each) do
-      @user = FactoryBot.create :user
+      @user = FactoryBot.create :admin
       @user.confirm
     end
 

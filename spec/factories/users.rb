@@ -45,6 +45,22 @@ FactoryBot.define do
     address FFaker::Address.street_address
     region FFaker::Address.city
     auth_token "ourToken"
-    role_input "admin"
+    factory :admin do
+        after(:build) do |user|
+            user.role_input = "admin"
+        end
+    end
+
+    factory :sales do
+        after(:build) do |user| 
+            user.role_input = "sales"
+        end
+    end
+
+    factory :customer do
+        after(:build) do |user| 
+            user.role_input = "sales"
+        end
+    end
   end
 end

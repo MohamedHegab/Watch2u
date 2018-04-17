@@ -8,6 +8,7 @@ abort("The Rails environment is running in production mode!") if Rails.env.produ
 require 'rspec/rails'
 require 'rack/test'
 require 'devise'
+require "paperclip/matchers"
 
 Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 
@@ -23,7 +24,9 @@ RSpec.configure do |config|
   # examples within a transaction, remove the following line or assign false
   # instead of true.
   config.use_transactional_fixtures = true
-  
+
+  config.include Paperclip::Shoulda::Matchers
+
   config.include Devise::Test::ControllerHelpers, :type => :controller
   
   config.extend ControllerMacros, :type => :controller
@@ -35,6 +38,7 @@ RSpec.configure do |config|
   config.before(:each, type: :controller) do
     include_default_accept_headers
   end
+
   config.infer_spec_type_from_file_location!
   config.filter_rails_from_backtrace!
 
@@ -48,6 +52,13 @@ RSpec.configure do |config|
   config.around(:each) do |example|
     DatabaseCleaner.cleaning do
       example.run
+    end
+  end
+
+  config.after(:all) do
+    if Rails.env.test?
+      test_uploads = Dir["#{Rails.root}/test_uploads"]
+      FileUtils.rm_rf(test_uploads)
     end
   end
 end

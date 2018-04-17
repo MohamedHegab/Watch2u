@@ -20,8 +20,8 @@ class Product < ApplicationRecord
 	validates :price, :discount, numericality: { greater_than: 0 }
 
 	############ Assocciations ###############
-  belongs_to :sub_category
-  belongs_to :category
+  belongs_to :sub_category, inverse_of: 'products'
+  belongs_to :category, inverse_of: 'products'
 
   extend FriendlyId
 	friendly_id :name, use: [:slugged, :finders]

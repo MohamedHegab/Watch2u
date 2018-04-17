@@ -131,6 +131,32 @@ RSpec.describe Api::V1::CategoriesController, type: :controller do
 
       it { should respond_with 200 }
     end
+  end
 
+  describe "DELETE #destroy" do
+    context "can destroy category when admin" do 
+      before(:each) do
+        admin = FactoryBot.create :admin
+        api_authorize(admin.auth_token)
+        @category = FactoryBot.create :category
+      end
+      it "" do
+        expect {
+          delete :destroy, params: {id: @category.id}
+        }.to change(Category, :count).by(-1)
+      end
+    end
+    context "can't destroy the category when sales" do 
+      before(:each) do 
+        sales = FactoryBot.create :sales
+        @category = FactoryBot.create :category
+        api_authorize(sales.auth_token)
+        delete :destroy, params: {id: @category.id}
+      end
+      it "" do 
+        category_response = json_response
+        expect(category_response[:message]).to include("Don't have authorization")
+      end
+    end
   end
 end

@@ -22,5 +22,8 @@ FactoryBot.define do
     discount 12
     sub_category
 		category
+		after(:create) do |p| 
+			p.category.sub_categories << p.sub_category
+		end
   end
 end

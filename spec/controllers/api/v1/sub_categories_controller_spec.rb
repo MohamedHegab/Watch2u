@@ -4,7 +4,7 @@ RSpec.describe Api::V1::SubCategoriesController, type: :controller do
       admin = FactoryBot.create :admin
       api_authorize(admin.auth_token)
       @sub_category = FactoryBot.create :sub_category
-      get :show, params: { category_id: @sub_category.category.id, id: @sub_category.id }
+      get :show, params: { category_id: @sub_category.category_id, id: @sub_category.id }
     end
 
     it "returns the information about the sub_category on a hash" do
@@ -84,7 +84,7 @@ RSpec.describe Api::V1::SubCategoriesController, type: :controller do
         api_authorize(admin.auth_token)
         @sub_category = FactoryBot.create :sub_category
         @name = 'female'
-        patch :update, params: { category_id: @sub_category.category.id, id: @sub_category.id,
+        patch :update, params: { category_id: @sub_category.category_id, id: @sub_category.id,
                          sub_category: { name: @name } }
       end
 
@@ -101,7 +101,7 @@ RSpec.describe Api::V1::SubCategoriesController, type: :controller do
       	admin = FactoryBot.create :admin
         api_authorize(admin.auth_token)
         @sub_category = FactoryBot.create :sub_category
-        patch :update, params: { category_id: @sub_category.category.id, id: @sub_category.id,
+        patch :update, params: { category_id: @sub_category.category_id, id: @sub_category.id,
                          sub_category: { name: nil } }
       end
 
@@ -123,7 +123,7 @@ RSpec.describe Api::V1::SubCategoriesController, type: :controller do
       	customer = FactoryBot.create :customer
         api_authorize(customer.auth_token)
         @sub_category = FactoryBot.create :sub_category
-        patch :update, params: { category_id: @sub_category.category.id, id: @sub_category.id,
+        patch :update, params: { category_id: @sub_category.category_id, id: @sub_category.id,
                          sub_category: { name: 'good' } }
       end
 
@@ -134,6 +134,32 @@ RSpec.describe Api::V1::SubCategoriesController, type: :controller do
 
       it { should respond_with 200 }
     end
+  end
 
+  describe "DELETE #destroy" do
+    context "can destroy sub category when admin" do 
+      before(:each) do
+        admin = FactoryBot.create :admin
+        api_authorize(admin.auth_token)
+        @sub_category = FactoryBot.create :sub_category
+      end
+      it "" do
+        expect {
+          delete :destroy, params: {category_id: @sub_category.category_id, id: @sub_category.id}
+        }.to change(SubCategory, :count).by(-1)
+      end
+    end
+    context "can't destroy the sub category when sales" do 
+      before(:each) do 
+        sales = FactoryBot.create :sales
+        @sub_category = FactoryBot.create :sub_category
+        api_authorize(sales.auth_token)
+        delete :destroy, params: {category_id: @sub_category.category_id, id: @sub_category.id}
+      end
+      it "" do 
+        category_response = json_response
+        expect(category_response[:message]).to include("Don't have authorization")
+      end
+    end
   end
 end

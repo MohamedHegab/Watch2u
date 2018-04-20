@@ -58,7 +58,7 @@ describe Api::V1::UsersController, type: :controller do
       before(:each) do
         @user = FactoryBot.create :admin
         api_authorize(@user.auth_token)
-        @gender = 'female'
+        @gender = 0
         patch :update, params: { id: @user.id,
                          user: { gender: @gender } }
       end

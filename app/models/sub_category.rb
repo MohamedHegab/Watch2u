@@ -17,7 +17,7 @@
 class SubCategory < ApplicationRecord
 	############ validations ############
 	validates_presence_of :name
-	validates :image, attachment_presence: true
+	# validates :image, attachment_presence: true
 	validates_with AttachmentSizeValidator, attributes: :image, less_than: 2.megabytes
 
 	############ Assocciations ############

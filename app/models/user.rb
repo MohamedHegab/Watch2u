@@ -54,6 +54,14 @@ class User < ApplicationRecord
   before_update :fix_attributes
   before_create :assign_role
 
+  ###### for testing remove in production
+  after_create :confirm_user 
+  #################
+
+  def confirm_user
+    self.confirm
+  end
+
   ############## Methods #################
 
   def fix_attributes

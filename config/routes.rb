@@ -98,13 +98,13 @@ Rails.application.routes.draw do
           end
         end
         resources :sessions, only: [:create, :destroy]
-        shallow do 
+        # shallow do 
           resources :categories do
             resources :sub_categories do 
               resources :products
             end
           end
-        end
+        # end
         post 'users/signup' => 'users#create'
         post 'users/signin' => 'sessions#create'
         post 'password/forgot', to: 'password#forgot'

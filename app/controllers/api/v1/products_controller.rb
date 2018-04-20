@@ -30,6 +30,9 @@ class Api::V1::ProductsController < Api::BaseController
 
 	def create
 	  @product = @sub_category.products.create(product_params)
+
+    @product.save_attachments(product_params) if params[:product][:product_image_data]
+
     if @product.valid? && @product.save
       render_success(:show, :created, nil, @product)
     else
@@ -58,6 +61,6 @@ class Api::V1::ProductsController < Api::BaseController
   end
 
 	def product_params
-	  params.require(:product).permit(:name, :description, :price, :discount, :sub_category_id, :category_id)
+	  params.require(:product).permit(:name, :description, :price, :discount, :sub_category_id, :category_id, product_image_data: [])
 	end
 end

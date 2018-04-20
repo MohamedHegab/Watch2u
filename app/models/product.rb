@@ -15,6 +15,7 @@
 #
 
 class Product < ApplicationRecord
+	attr_accessor :product_image_data
 	############ validations #################
 	validates_presence_of :name, :price, :description
 	validates :price, :discount, numericality: { greater_than: 0 }
@@ -22,9 +23,16 @@ class Product < ApplicationRecord
 	############ Assocciations ###############
   belongs_to :sub_category, inverse_of: 'products'
   belongs_to :category, inverse_of: 'products'
+  has_many :product_images, dependent: :destroy
 
   extend FriendlyId
 	friendly_id :name, use: [:slugged, :finders]
+
+	def save_attachments(params) 
+		params[:product_image_data].each do |doc| 
+			self.product_images.build(image_contents: doc) 
+		end 
+	end
 
 	private
 

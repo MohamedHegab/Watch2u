@@ -18,9 +18,10 @@ class Product < ApplicationRecord
 	############ validations #################
 	validates_presence_of :name, :price, :description
 	validates :price, :discount, numericality: { greater_than_or_equal_to: 0 }
+
 	############ Assocciations ###############
-  belongs_to :sub_category
-  # belongs_to :category
+  belongs_to :sub_category, inverse_of: 'products'
+  belongs_to :category, inverse_of: 'products'
 
   extend FriendlyId
 	friendly_id :name, use: [:slugged, :finders]

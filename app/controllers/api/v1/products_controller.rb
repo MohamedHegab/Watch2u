@@ -17,7 +17,7 @@ class Api::V1::ProductsController < Api::BaseController
 	end
 
 	def show
-		
+    render_success(:show, :ok, nil, @product)
 	end
 
 	def update
@@ -30,6 +30,7 @@ class Api::V1::ProductsController < Api::BaseController
 
 	def create
 	  @product = @sub_category.products.create(product_params)
+    @product.category_id = @category.id
     if @product.valid? && @product.save
       render_success(:show, :created, nil, @product)
     else

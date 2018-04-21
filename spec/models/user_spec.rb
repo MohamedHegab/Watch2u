@@ -33,7 +33,7 @@
 #
 
 describe User do
-  before { @user = FactoryBot.build(:user) }
+  before { @user = FactoryBot.build(:admin) }
 
   subject { @user }
 
@@ -58,7 +58,7 @@ describe User do
     end
 
     it "generates another token when one already has been taken" do
-      existing_user = FactoryBot.create(:user, auth_token: "auniquetoken123")
+      existing_user = FactoryBot.create(:admin, auth_token: "auniquetoken123")
       @user.generate_authentication_token!
       expect(@user.auth_token).not_to eql existing_user.auth_token
     end

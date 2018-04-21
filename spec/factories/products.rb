@@ -16,11 +16,14 @@
 
 FactoryBot.define do
   factory :product do
-    name "MyString"
-    description "MyText"
+    name FFaker::Product.name
+    description FFaker::Book.description
     price 1.5
-    discount 1
-    sub_category nil
-    sub_category_category nil
+    discount 12
+    sub_category
+		category
+		after(:create) do |p| 
+			p.category.sub_categories << p.sub_category
+		end
   end
 end

@@ -1,7 +1,7 @@
 describe Api::V1::UsersController, type: :controller do
   describe "GET #show" do
     before(:each) do
-      @user = FactoryBot.create :user
+      @user = FactoryBot.create :admin
       api_authorize(@user.auth_token)
       get :show, params: { id: @user.id }
     end
@@ -18,7 +18,7 @@ describe Api::V1::UsersController, type: :controller do
 
     context "when is successfully created" do
       before(:each) do
-        @user_attributes = FactoryBot.attributes_for :user
+        @user_attributes = FactoryBot.attributes_for(:admin).merge(role_input: 'admin')
         post :create, params: { user: @user_attributes }
       end
 
@@ -56,9 +56,9 @@ describe Api::V1::UsersController, type: :controller do
 
     context "when is successfully updated" do
       before(:each) do
-        @user = FactoryBot.create :user
+        @user = FactoryBot.create :admin
         api_authorize(@user.auth_token)
-        @gender = 'female'
+        @gender = 0
         patch :update, params: { id: @user.id,
                          user: { gender: @gender } }
       end
@@ -73,7 +73,7 @@ describe Api::V1::UsersController, type: :controller do
 
     context "when is not created" do
       before(:each) do
-        @user = FactoryBot.create :user
+        @user = FactoryBot.create :admin
         api_authorize(@user.auth_token)
         patch :update, params: { id: @user.id,
                          user: { gender: "ss" } }
@@ -90,6 +90,18 @@ describe Api::V1::UsersController, type: :controller do
       end
 
       it { should respond_with 422 }
+    end
+  end
+
+  describe "DELETE #destroy" do
+    before(:each) do
+      @user = FactoryBot.create :admin
+      api_authorize(@user.auth_token)
+    end
+    it "destroys the requested user" do
+      expect {
+        delete :destroy, params: {id: @user.id}
+      }.to change(User, :count).by(-1)
     end
   end
 end

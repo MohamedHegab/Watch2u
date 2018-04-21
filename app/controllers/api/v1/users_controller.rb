@@ -36,8 +36,11 @@ class Api::V1::UsersController < Api::BaseController
 
   def destroy
     user = User.find(params[:id])
-    user.destroy
-    head 204
+    if user&.destroy
+      render_success(nil, 204, "user destroyed succefully", nil)
+    else
+      render_fail('cannot destroy user')
+    end
   end
 
   # def create_guest

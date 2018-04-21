@@ -12,10 +12,18 @@
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #  slug            :string
-#
 
-require 'rails_helper'
 
 RSpec.describe Product, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  before { @product = FactoryBot.build(:product) }
+
+  subject { @product }
+
+	it { should validate_presence_of(:name) }
+	it { should validate_presence_of(:price) }
+	it { should validate_presence_of(:description) }
+	it { should belong_to(:category) }
+  it { should belong_to(:sub_category) }
+  it { should validate_numericality_of(:price).is_greater_than(0) }
+	it { should validate_numericality_of(:discount).is_greater_than(0) }
 end

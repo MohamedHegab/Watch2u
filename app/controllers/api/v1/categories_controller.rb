@@ -15,7 +15,7 @@ class Api::V1::CategoriesController < Api::BaseController
 	end
 
 	def show
-
+    render_success(:show, :ok, nil, @category)
 	end
 
 	def update

@@ -16,8 +16,8 @@
 
 FactoryBot.define do
   factory :sub_category do
-    name "MyString"
-    image ""
-    category nil
+    name FFaker::Name.first_name
+    image { fixture_file_upload "#{Rails.root}/spec/fixtures/images/product.png", 'image/png' }
+    category
   end
 end

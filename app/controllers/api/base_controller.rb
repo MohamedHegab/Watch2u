@@ -5,7 +5,6 @@ class Api::BaseController < ApplicationController
   protect_from_forgery with: :null_session
 
   def authenticate_with_token!
-    # byebug
     render_fail('Not Authorized') unless user_signed_in?
   end
 
@@ -26,7 +25,7 @@ class Api::BaseController < ApplicationController
     if action.is_a? Symbol
       render action, layout: 'jsend', status: status
     else
-      @response = {success: true, data: action, message: message, code: :ok}
+      @response = {success: true, data: resource, message: message, code: :ok}
       render :partial => 'api/v1/errors', layout: 'jsend', status: :ok, :formats => [:json]
     end
   end

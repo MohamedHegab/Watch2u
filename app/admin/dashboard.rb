@@ -14,18 +14,18 @@ ActiveAdmin.register_page "Dashboard" do
 
     columns do
       column do
-        panel "Recent Posts" do
-          # ul do
-          #   Post.recent(5).map do |post|
-          #     li link_to(post.title, admin_post_path(post))
-          #   end
-          # end
+        panel "Recent Categories" do
+          ul do
+            Category.first(5).map do |category|
+              li link_to(category.name, admin_category_path(category))
+            end
+          end
         end
       end
 
       column do
         panel "Info" do
-          para "Welcome to ActiveAdmin."
+          para "Welcome to Watch2u."
         end
       end
     end

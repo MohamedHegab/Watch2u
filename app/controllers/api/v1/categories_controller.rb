@@ -11,7 +11,6 @@ class Api::V1::CategoriesController < Api::BaseController
     @q.sorts = 'created_at' if @q.sorts.empty?
 
     @categories = @q.result.page(page_size)
-    # @categories = @categories.per(page_size)
     render_success(:index, :ok, nil, @categories)
 	end
 

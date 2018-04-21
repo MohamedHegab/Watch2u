@@ -41,7 +41,7 @@ FactoryBot.define do
     password_confirmation 'MyPassword123'
     mobile FFaker::PhoneNumberAU.mobile_phone_number
     code FFaker::PhoneNumberAU.country_code
-    gender FFaker::Gender.random
+    gender 0
     address FFaker::Address.street_address
     region FFaker::Address.city
     auth_token "ourToken"

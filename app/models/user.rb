@@ -46,13 +46,22 @@ class User < ApplicationRecord
   validates_presence_of :role_input, on: :create
   validates_uniqueness_of :mobile, :email
   validates :auth_token, uniqueness: true
-  validates :gender, inclusion: { in: ['male', 'female'] }
+  # validates :gender, inclusion: { in: [male: 0, female: 1] }
+  enumerize :gender, in: {male: 0, female: 1}, scope: true
   enumerize :role_input, in: {customer: 0, sales: 1, admin: 2}, scope: true
 
   ############## Callbacks #################
   before_create :fix_attributes
   before_update :fix_attributes
   before_create :assign_role
+
+  ###### for testing remove in production
+  after_create :confirm_user 
+  ########
+  def confirm_user
+    self.confirm
+  end
+  #########
 
   ############## Methods #################
 

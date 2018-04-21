@@ -18,7 +18,7 @@ class Product < ApplicationRecord
 	attr_accessor :product_image_data
 	############ validations #################
 	validates_presence_of :name, :price, :description
-	validates :price, :discount, numericality: { greater_than: 0 }
+	validates :price, :discount, numericality: { greater_than_or_equal_to: 0 }
 
 	############ Assocciations ###############
   belongs_to :sub_category, inverse_of: 'products'

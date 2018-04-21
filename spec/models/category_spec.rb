@@ -11,7 +11,6 @@
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
 #  slug               :string
-#
 
 RSpec.describe Category, type: :model do
 	before { @category = FactoryBot.build(:category) }
@@ -22,7 +21,7 @@ RSpec.describe Category, type: :model do
   it { should have_attached_file(:image) }
   it { should have_many(:sub_categories).dependent(:destroy) }
   it { should have_many(:products).through(:sub_categories) }
-  it { should validate_attachment_presence(:image) }
+  # it { should validate_attachment_presence(:image) }
   it { should validate_attachment_content_type(:image).
                 allowing('image/png', 'image/gif', 'image/jpeg', 'image/jpg').
                 rejecting('text/plain', 'text/xml') }

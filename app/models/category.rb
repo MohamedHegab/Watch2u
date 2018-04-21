@@ -16,13 +16,15 @@
 class Category < ApplicationRecord
 	############ validations ############
 	validates_presence_of :name
-	validates :image, attachment_presence: true
+	# validates :image, attachment_presence: true
 	validates_with AttachmentSizeValidator, attributes: :image, less_than: 2.megabytes
 
 	############ Assocciations ############
-	has_attached_file :image, styles: { medium: "300x300>", thumb: "100x100>" }, default_url: "/images/:style/missing.png"
+	has_attached_file :image, styles: { medium: "300x300>", thumb: "100x100>" }, default_url: "/images/missing.jpg"
   validates_attachment_content_type :image, content_type: /\Aimage\/.*\z/
 	has_many :sub_categories, dependent: :destroy
+	accepts_nested_attributes_for :sub_categories
+
 	has_many :products, through: :sub_categories
 
 	extend FriendlyId

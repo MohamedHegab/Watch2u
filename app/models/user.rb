@@ -35,7 +35,7 @@
 class User < ApplicationRecord
   extend Enumerize
   rolify
-  attr_accessor :role_input
+  attr_accessor :role_input, :image_content
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -46,11 +46,17 @@ class User < ApplicationRecord
   validates_presence_of :role_input, on: :create
   validates_uniqueness_of :mobile, :email
   validates :auth_token, uniqueness: true
-  # validates :gender, inclusion: { in: [male: 0, female: 1] }
+  validates_with AttachmentSizeValidator, attributes: :image, less_than: 2.megabytes
+
+  ############## ENUM ########################  
   enumerize :gender, in: {male: 0, female: 1}, scope: true
   enumerize :role_input, in: {customer: 0, sales: 1, admin: 2}, scope: true
 
+  has_attached_file :image, styles: { medium: "300x300>", thumb: "100x100>" }, default_url: "/images/missing.jpg"
+  validates_attachment_content_type :image, content_type: /\Aimage\/.*\z/
+
   ############## Callbacks #################
+  before_validation :parse_image
   before_create :fix_attributes
   before_update :fix_attributes
   before_create :assign_role
@@ -117,5 +123,12 @@ class User < ApplicationRecord
 
   def generate_token
     SecureRandom.hex(10)
+  end
+  ################################################
+
+  def parse_image
+    image = Paperclip.io_adapters.for(self.image_content) 
+    image.original_filename = self.image_file_name
+    self.image = image 
   end
 end

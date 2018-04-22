@@ -85,7 +85,7 @@ RSpec.describe Api::V1::SubCategoriesController, type: :controller do
         @sub_category = FactoryBot.create :sub_category
         @name = 'female'
         patch :update, params: { category_id: @sub_category.category_id, id: @sub_category.id,
-                         sub_category: { name: @name } }
+                         sub_category: FactoryBot.attributes_for(:sub_category, name: 'female') }
       end
 
       it "renders the json representation for the updated user" do

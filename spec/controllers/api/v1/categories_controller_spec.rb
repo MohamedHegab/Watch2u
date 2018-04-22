@@ -82,7 +82,7 @@ RSpec.describe Api::V1::CategoriesController, type: :controller do
         @category = FactoryBot.create :category
         @name = 'female'
         patch :update, params: { id: @category.id,
-                         category: { name: @name } }
+                         category: FactoryBot.attributes_for(:category, name: 'female') }
       end
 
       it "renders the json representation for the updated user" do

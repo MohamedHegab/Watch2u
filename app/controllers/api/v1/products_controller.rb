@@ -30,7 +30,7 @@ class Api::V1::ProductsController < Api::BaseController
 
 	def create
 	  @product = @sub_category.products.create(product_params)
-    
+
     @product.save_attachments(product_params) if params[:product][:product_image_data]
     @product.category_id = @category.id
 

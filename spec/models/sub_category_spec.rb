@@ -22,11 +22,11 @@ RSpec.describe SubCategory, type: :model do
 	it { should validate_presence_of(:name) }
 	it { should belong_to(:category) }
   it { should have_many(:products).dependent(:destroy) }
-  it { should have_attached_file(:image) }
+  # it { should have_attached_file(:image) }
   # it { should validate_attachment_presence(:image) }
-  it { should validate_attachment_content_type(:image).
-                allowing('image/png', 'image/gif', 'image/jpeg', 'image/jpg').
-                rejecting('text/plain', 'text/xml') }
-  it { should validate_attachment_size(:image).
-                less_than(2.megabytes) }
+  # it { should validate_attachment_content_type(:image).
+  #               allowing('image/png', 'image/gif', 'image/jpeg', 'image/jpg').
+  #               rejecting('text/plain', 'text/xml') }
+  # it { should validate_attachment_size(:image).
+  #               less_than(2.megabytes) }
 end

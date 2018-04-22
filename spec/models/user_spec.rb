@@ -48,6 +48,11 @@ describe User do
   it { should validate_uniqueness_of(:auth_token) }
 	it { should validate_confirmation_of(:password) }
   it { should respond_to(:auth_token) }
+  it { should validate_attachment_content_type(:image).
+                allowing('image/png', 'image/gif', 'image/jpeg', 'image/jpg').
+                rejecting('text/plain', 'text/xml') }
+  # it { should validate_attachment_size(:image).
+  #               less_than(2.megabytes) }
 	it { expect(@user.username).to eql "#{@user.first_name}_#{@user.last_name}" }
 
 	describe "#generate_authentication_token!" do

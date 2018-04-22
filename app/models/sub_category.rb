@@ -15,9 +15,13 @@
 #
 
 class SubCategory < ApplicationRecord
+	attr_accessor :image_content
+
 	############ validations ############
+	before_validation :parse_image
+
 	validates_presence_of :name
-	# validates :image, attachment_presence: true
+	validates :image, attachment_presence: true
 	validates_with AttachmentSizeValidator, attributes: :image, less_than: 2.megabytes
 
 	############ Assocciations ############
@@ -36,4 +40,10 @@ class SubCategory < ApplicationRecord
 	def should_generate_new_friendly_id?
 	  slug.nil? || name_changed?
 	end
+
+	def parse_image
+  	image = Paperclip.io_adapters.for(self.image_content) 
+  	image.original_filename = self.image_file_name
+  	self.image = image 
+  end
 end

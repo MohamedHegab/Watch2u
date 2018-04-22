@@ -14,9 +14,10 @@
 #
 
 class Category < ApplicationRecord
+	attr_accessor :image_content
 	############ validations ############
 	validates_presence_of :name
-	# validates :image, attachment_presence: true
+	validates :image, attachment_presence: true
 	validates_with AttachmentSizeValidator, attributes: :image, less_than: 2.megabytes
 
 	############ Assocciations ############
@@ -24,12 +25,14 @@ class Category < ApplicationRecord
   validates_attachment_content_type :image, content_type: /\Aimage\/.*\z/
 	has_many :sub_categories, dependent: :destroy
 	accepts_nested_attributes_for :sub_categories
-
 	has_many :products, through: :sub_categories
+
+	############ Callbacks ################
+	before_validation :parse_image
+
 
 	extend FriendlyId
 	friendly_id :name, use: [:slugged, :finders]
-
 
 	private
 
@@ -37,4 +40,9 @@ class Category < ApplicationRecord
 	  slug.nil? || name_changed?
 	end
 
+	def parse_image
+  	image = Paperclip.io_adapters.for(self.image_content) 
+  	image.original_filename = self.image_file_name
+  	self.image = image 
+  end
 end

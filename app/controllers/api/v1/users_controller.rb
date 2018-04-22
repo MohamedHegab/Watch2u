@@ -11,6 +11,11 @@ class Api::V1::UsersController < Api::BaseController
   def create
     @user = User.new(user_params)
 
+    # @address = Address.create(user_params[:address]) if user_params[:addresses_attr]
+    # @address.user_id = @user.id
+
+    # @user.region = Region.create(user_params[:region]) if user_params[:region]
+
     if @user.valid? && @user.save
       UserMailer.welcome_email(@user).deliver_later
       render_success(:show, :created)
@@ -55,7 +60,7 @@ class Api::V1::UsersController < Api::BaseController
   private
 
   def user_params
-    params.require(:user).permit(:email, :mobile, :code, :region, :address, :first_name, :last_name, :password, :password_confirmation, :gender, :role_input )
+    params.require(:user).permit(:email, :mobile, :code, :first_name, :last_name, :password, :password_confirmation, :gender, :role_input, {addresses_attributes: [:latitude, :longitude, :street_address]}, {region_attributes: [:name]} )
   end
 
   def set_user

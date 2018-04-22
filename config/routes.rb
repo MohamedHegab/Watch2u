@@ -21,6 +21,7 @@ Rails.application.routes.draw do
             resources :products
           end
         end
+        resources :regions, only: [:index]
         post 'users/signup' => 'users#create'
         post 'users/signin' => 'sessions#create'
         post 'password/forgot', to: 'password#forgot'

@@ -30,8 +30,8 @@ class Product < ApplicationRecord
 
 	def save_attachments(params) 
 		params[:product_image_data].each do |doc| 
-			self.product_images.build(image_contents: doc) 
-		end 
+			self.product_images.build(image_contents: doc['image_content'], image_file_name: doc['image_file_name'])
+		end
 	end
 
 	private

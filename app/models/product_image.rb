@@ -20,14 +20,13 @@ class ProductImage < ApplicationRecord
 	############ validations #################
 	before_validation :parse_image
 
-  has_attached_file :image, styles: { medium: "780x668#", small: "480x880#", big: "1920x1280#" }, default_url: "/images/:style/missing.png"
+  has_attached_file :image, styles: { medium: "780x668#", small: "480x880#", big: "1920x1280#" }, default_url: "/images/missing.png"
   validates_attachment_content_type :image, content_type: /\Aimage\/.*\z/
 
-  private 
+  private
   def parse_image
-  	# byebug
   	image = Paperclip.io_adapters.for(image_contents) 
-  	image.original_filename = "image.jpg" 
+  	image.original_filename = self.image_file_name
   	self.image = image 
   end
 end

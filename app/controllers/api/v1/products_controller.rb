@@ -62,6 +62,6 @@ class Api::V1::ProductsController < Api::BaseController
   end
 
 	def product_params
-	  params.require(:product).permit(:name, :description, :price, :discount, :sub_category_id, :category_id, product_image_data: [])
+	  params.require(:product).permit(:name, :description, :price, :discount, :sub_category_id, :category_id, product_image_data: [:image_file_name, :image_content])
 	end
 end

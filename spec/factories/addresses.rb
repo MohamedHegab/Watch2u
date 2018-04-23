@@ -17,13 +17,12 @@
 
 FactoryBot.define do
   factory :address do
-    city "MyString"
-    country "MyString"
-    street_address "MyString"
-    floor_no "MyString"
-    building_no "MyString"
-    lat "MyString"
-    lng "MyString"
-    user nil
+    street_address FFaker::Address.street_address
+    floor_no FFaker::Address.building_number
+    building_no FFaker::Address.building_number
+    lat FFaker::Geolocation.lat
+    lng FFaker::Geolocation.lng
+    association :user, factory: [:admin]
+    region
   end
 end

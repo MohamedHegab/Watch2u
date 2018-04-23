@@ -10,6 +10,6 @@
 
 FactoryBot.define do
   factory :region do
-    name "MyString"
+    name FFaker::Address.city
   end
 end

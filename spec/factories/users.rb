@@ -45,8 +45,7 @@ FactoryBot.define do
     mobile FFaker::PhoneNumberAU.mobile_phone_number
     code FFaker::PhoneNumberAU.country_code
     gender 0
-    address FFaker::Address.street_address
-    region FFaker::Address.city
+    region
     auth_token "ourToken"
     factory :admin do
         after(:build) do |user|

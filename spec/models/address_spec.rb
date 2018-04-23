@@ -15,8 +15,16 @@
 #  updated_at     :datetime         not null
 #
 
-require 'rails_helper'
-
 RSpec.describe Address, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  before { @address = FactoryBot.build(:address) }
+
+  subject { @address }
+
+	it { should validate_presence_of(:lat) }
+	it { should validate_presence_of(:lng) }
+	it { should validate_presence_of(:street_address) }
+
+  it { should belong_to(:user) }
+  it { should belong_to(:region) }
+
 end

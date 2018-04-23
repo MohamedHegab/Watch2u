@@ -18,7 +18,8 @@ describe Api::V1::UsersController, type: :controller do
 
     context "when is successfully created" do
       before(:each) do
-        @user_attributes = FactoryBot.attributes_for(:admin).merge(role_input: 'admin')
+        region = FactoryBot.create(:region) 
+        @user_attributes = FactoryBot.attributes_for(:admin).merge(role_input: 'admin').merge(region: FactoryBot.attributes_for(:region, id: region.id))
         post :create, params: { user: @user_attributes }
       end
 

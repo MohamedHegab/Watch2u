@@ -5,7 +5,7 @@ class UserMailer < ApplicationMailer
     new_email ||= user.email
     return if new_email.nil?
     @user = user
-    @confirmation_url = Google::DynamicLink.generate_link(user_confirmation_path(:confirmation_token => @user.confirmation_token))
+    @confirmation_url = Google::DynamicLink.generate_link(user_confirmation_url(:confirmation_token => @user.confirmation_token))
     mail(to: new_email, subject: 'Welcome to watch2you')
   end
 

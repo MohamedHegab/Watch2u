@@ -5,8 +5,12 @@ class Api::V1::AddressController < ApplicationController
 	
   before_action :set_address, only: [:show, :update, :destroy]
 
+  def index
+  	@addresses = Address.all
+  end
+	
 	def show
-
+		
 	end
 
 	def create

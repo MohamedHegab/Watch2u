@@ -7,9 +7,7 @@
 #  encrypted_password     :string           default(""), not null
 #  first_name             :string           default(""), not null
 #  last_name              :string           default(""), not null
-#  region                 :string
-#  address                :string
-#  gender                 :string           default(""), not null
+#  gender                 :string           default(NULL), not null
 #  reset_password_token   :string
 #  reset_password_sent_at :datetime
 #  remember_created_at    :datetime
@@ -30,6 +28,11 @@
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #  auth_token             :string
+#  image_file_name        :string
+#  image_content_type     :string
+#  image_file_size        :integer
+#  image_updated_at       :datetime
+#  region_id              :uuid
 #
 
 describe User do

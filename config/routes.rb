@@ -110,7 +110,6 @@
 #                                           POST       /users/confirmation(.:format)                                                                         devise/confirmations#create
 # 
 
-
 Rails.application.routes.draw do
 
     devise_for :admin_users, ActiveAdmin::Devise.config

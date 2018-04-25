@@ -3,7 +3,6 @@
 # Table name: addresses
 #
 #  id             :uuid             not null, primary key
-#  city           :string
 #  country        :string
 #  street_address :string
 #  floor_no       :string
@@ -13,6 +12,7 @@
 #  user_id        :uuid
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
+#  region_id      :uuid
 #
 
 class Address < ApplicationRecord

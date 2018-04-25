@@ -24,7 +24,9 @@ class Product < ApplicationRecord
   belongs_to :sub_category, inverse_of: 'products'
   belongs_to :category, inverse_of: 'products'
   has_many :product_images, dependent: :destroy
-
+  has_many :order_products
+  has_many :orders, through: :order_products
+  
   extend FriendlyId
 	friendly_id :name, use: [:slugged, :finders]
 

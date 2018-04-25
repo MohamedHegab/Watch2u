@@ -59,6 +59,7 @@ class User < ApplicationRecord
   validates_attachment_content_type :image, content_type: /\Aimage\/.*\z/
   
   has_many :addresses, dependent: :destroy
+  has_many :orders, dependent: :destroy
   belongs_to :region
   accepts_nested_attributes_for :addresses
 

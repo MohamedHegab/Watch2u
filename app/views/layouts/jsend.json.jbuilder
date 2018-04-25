@@ -1,6 +1,6 @@
 if @response.is_a?(Hash)
   if @response.include?(:error)
-    json.status :error
+    json.status @response[:status]
     json.message @response[:message]
     json.code @response[:code] if @response.include?(:code)
     # json.data  @response[:data] if @response[:data]

@@ -9,7 +9,7 @@ class Api::V1::SessionsController < Api::BaseController
       # render json: {status: 'success', data: user}
       render_success(:show, :ok, "user signed in", @user, no_meta: true)
     else
-      render_fail('invalid email or password')
+      render_error("invalid email or password", nil)
     end
   end
 

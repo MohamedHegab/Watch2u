@@ -40,8 +40,8 @@ class Api::BaseController < ApplicationController
     render :partial => 'api/v1/errors', layout: 'jsend', status: 422, :formats => [:json]
   end
 
-  def render_error(message, code=2000, data={})
-    @response = {error: true, message: message, code: code}
+  def render_error(message, code=2000, data={}, status= :ok)
+    @response = {error: true, message: message, code: code, status: '200'}
     render :partial => 'api/v1/errors', layout: 'jsend', status: :ok, :formats => [:json]
   end
 

@@ -7,7 +7,7 @@ class Api::V1::OrdersController < Api::BaseController
 
   def index
 		page_size = params[:page_size]
-    @q = Order.ransack(params[:q])
+    @q = Order.not_draft.ransack(params[:q])
     @q.sorts = 'created_at' if @q.sorts.empty?
 
     @orders = @q.result.page(page_size)
@@ -48,4 +48,8 @@ class Api::V1::OrdersController < Api::BaseController
 	def set_order
 		@order = Order.find(params[:id])
 	end
+
+  def order_params
+    params.require(:order).permit(:customer_id)
+  end
 end

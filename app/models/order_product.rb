@@ -24,6 +24,8 @@ class OrderProduct < ApplicationRecord
 
 
 	def q_p_cost
-		self.quantity * self.price
+		cost = self.quantity * self.price
+		return (cost - (cost * discount))
 	end
+
 end

@@ -7,7 +7,7 @@ class Api::V1::SessionsController < Api::BaseController
       @user.generate_authentication_token!
       @user.save
       # render json: {status: 'success', data: user}
-      render_success(:show, :ok, "user signed in", @user, no_meta: true)
+      render_success(nil, :ok, "user signed in", @user)
     else
       render_fail('invalid email or password')
     end

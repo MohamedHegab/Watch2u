@@ -21,7 +21,7 @@
 
 jQuery(document).ready(function() {
 	$('select[data-option-dependent=true]').each(function (i) {
-
+		
 		var observer_dom_id = $(this).attr('id');
 		var observed_dom_id = $(this).data('option-observed');
 		var url_mask        = $(this).data('option-url');

@@ -131,6 +131,7 @@ Rails.application.routes.draw do
             resources :products
           end
         end
+        resources :orders
         resources :regions, only: [:index]
         post 'users/signup' => 'users#create'
         post 'users/signin' => 'sessions#create'

@@ -78,3 +78,7 @@ en:
     product_can_not_be_created: 'Product cannot be created'
     product_can_not_be_deleted: 'Product cannot be deleted'
     product_can_not_be_updated: 'Product cannot be updated'
+  order:
+    order_can_not_be_created: 'Order cannot be created'
+    order_can_not_be_deleted: 'Order cannot be deleted'
+    order_can_not_be_updated: 'Order cannot be updated'

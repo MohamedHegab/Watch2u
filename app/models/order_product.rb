@@ -22,4 +22,8 @@ class OrderProduct < ApplicationRecord
 
 	############ Callbacks ############
 
+
+	def q_p_cost
+		self.quantity * self.price
+	end
 end

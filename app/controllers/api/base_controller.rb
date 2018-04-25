@@ -20,8 +20,8 @@ class Api::BaseController < ApplicationController
     end
   end
 
-  def render_success(action, status = :ok, message=nil, resource=nil)
-    @response = {success: true, message: message, resource: resource}
+  def render_success(action, status = :ok, message=nil, resource=nil, no_meta=false)
+    @response = {success: true, message: message, resource: resource, no_meta: no_meta}
     if action.is_a? Symbol
       render action, layout: 'jsend', status: status
     else

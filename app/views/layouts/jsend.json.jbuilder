@@ -14,14 +14,16 @@ if @response.is_a?(Hash)
     json.message  @response[:message] if  @response[:message]
     json.data @response.include?(:data) ? @response[:data] : JSON.parse(yield)
     if @response.include?(:resource)
-      json.meta do
-        if not @response[:resource].nil?
-          json.pagination do
-            json.current_page @response[:resource].try(:current_page)
-            json.total_pages @response[:resource].try(:total_pages)
+      if !@response[:no_meta]
+        json.meta do
+          if not @response[:resource].nil?
+            json.pagination do
+              json.current_page @response[:resource].try(:current_page)
+              json.total_pages @response[:resource].try(:total_pages)
 
-            json.size @response[:resource].try(:size)
-            json.total_count @response[:resource].try(:total_count)
+              json.size @response[:resource].try(:size)
+              json.total_count @response[:resource].try(:total_count)
+            end
           end
         end
       end

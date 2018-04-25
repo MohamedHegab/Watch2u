@@ -12,11 +12,11 @@ ActiveAdmin.register Category do
     f.inputs do
       f.input :name
       f.input :image, as: :file
-       if f.object.image.present?
-         f.semantic_fields_for :image_attributes do |image_fields|
-         image_fields.input :_destroy, as: :boolean, label: 'Delete?'
-         end
-       end
+      if f.object.image.present?
+        f.semantic_fields_for :image_attributes do |image_fields|
+          image_fields.input :_destroy, as: :boolean, label: 'Delete?'
+        end
+      end
     end
     f.actions
 

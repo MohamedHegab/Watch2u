@@ -18,7 +18,6 @@ ActiveAdmin.register Category do
         end
       end
     end
-    f.actions
 
     f.has_many :sub_categories do |sub_category|
       sub_category.inputs "Sub Categories" do
@@ -32,6 +31,8 @@ ActiveAdmin.register Category do
         sub_category.input :slug
       end
     end
+
+    f.actions
   end
 
   show do |category|

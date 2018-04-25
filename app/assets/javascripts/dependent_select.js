@@ -32,26 +32,35 @@ jQuery(document).ready(function() {
 
 		var observer = $('select#'+ observer_dom_id);
 		var observed = $('select#'+ observed_dom_id);
-		
-		if (!observer.val() && observed.size() > 1) {
+
+		if (!observer.val() && observed.children('option').length > 1) {
 			observer.attr('disabled', true);
 		}
 		observed.on('change', function() {
-			console.log("changeed");
 			url = url_mask.replace(regexp, function(submask) {
 				dom_id = submask.substring(1, submask.length);
 				return $("select#"+ dom_id).val();
 			});
-			
+
 			observer.empty().append();
-			
-			$.getJSON(url, function(data) {
-				$.each(data, function(i, object) {
-					observer.append($('<option>').attr('value', object[key_method]).text(object[value_method]));
-					observer.attr('disabled', false);
-				});
-				
-			});
+
+			$.ajax({
+          url: url,
+          type: 'GET',
+          dataType: 'json',
+          success: function(data) { 
+          	$.each(data.data, function(i, object) {
+							observer.append($('<option>').attr('value', object[key_method]).text(object[value_method]));
+							observer.attr('disabled', false);
+						});
+          },
+          error: function(err) { console.log(err) },
+          beforeSend: setHeader
+        });
 		});
 	});
 });
+
+function setHeader(xhr) {
+  xhr.setRequestHeader('ApiKey', 'key=1d7801c576b33db841d59216d8cf91d4');
+}

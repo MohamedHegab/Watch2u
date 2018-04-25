@@ -22,8 +22,9 @@ class Product < ApplicationRecord
 
 	############ Assocciations ###############
   belongs_to :sub_category, inverse_of: 'products'
-  belongs_to :category, inverse_of: 'products'
+  belongs_to :category
   has_many :product_images, dependent: :destroy
+  accepts_nested_attributes_for :product_images
 
   extend FriendlyId
 	friendly_id :name, use: [:slugged, :finders]

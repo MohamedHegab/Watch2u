@@ -41,8 +41,10 @@ class Category < ApplicationRecord
 	end
 
 	def parse_image
-  	image = Paperclip.io_adapters.for(self.image_content) 
-  	image.original_filename = self.image_file_name
-  	self.image = image 
+		if self.image_content
+	  	image = Paperclip.io_adapters.for(self.image_content) 
+	  	image.original_filename = self.image_file_name
+	  	self.image = image 
+	  end
   end
 end

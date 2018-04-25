@@ -1,13 +1,13 @@
 class Api::V1::SessionsController < Api::BaseController
 
   def create
-    user = User.where(email: params[:user][:email]).first
-    if user&.valid_password?(params[:user][:password])
-      sign_in user, store: false
-      user.generate_authentication_token!
-      user.save
+    @user = User.where(email: params[:user][:email]).first
+    if @user&.valid_password?(params[:user][:password])
+      sign_in @user, store: false
+      @user.generate_authentication_token!
+      @user.save
       # render json: {status: 'success', data: user}
-      render_success(nil, :ok, "user is signed in", user)
+      render_success(:show, :ok, "user signed in", @user)
     else
       render_fail('invalid email or password')
     end

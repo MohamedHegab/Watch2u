@@ -3,5 +3,6 @@ class Api::V1::RegionController < ApplicationController
 
 	def index
 		@regions = Region.all
+    render_success(:index, :ok, nil, @regions)
 	end
 end

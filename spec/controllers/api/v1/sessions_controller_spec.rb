@@ -33,7 +33,7 @@ describe Api::V1::SessionsController do
         expect(json_response[:message]).to eql "invalid email or password"
       end
 
-      it { should respond_with 422 }
+      it { should respond_with 200 }
     end
   end
 end

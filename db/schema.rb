@@ -125,12 +125,10 @@ ActiveRecord::Schema.define(version: 20180425060247) do
     t.float "price", null: false
     t.integer "discount"
     t.uuid "sub_category_id"
-    t.uuid "category_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "slug"
-    t.index ["category_id"], name: "index_products_on_category_id"
-    t.index ["name", "sub_category_id", "category_id"], name: "index_products_on_name_and_sub_category_id_and_category_id"
+    t.uuid "category_id"
     t.index ["slug"], name: "index_products_on_slug", unique: true
     t.index ["sub_category_id"], name: "index_products_on_sub_category_id"
   end
@@ -217,7 +215,6 @@ ActiveRecord::Schema.define(version: 20180425060247) do
   add_foreign_key "order_products", "orders"
   add_foreign_key "order_products", "products"
   add_foreign_key "product_images", "products"
-  add_foreign_key "products", "categories"
   add_foreign_key "products", "sub_categories"
   add_foreign_key "sub_categories", "categories"
   add_foreign_key "users", "regions"

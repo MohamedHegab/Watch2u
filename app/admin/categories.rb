@@ -12,13 +12,12 @@ ActiveAdmin.register Category do
     f.inputs do
       f.input :name
       f.input :image, as: :file
-       if f.object.image.present?
-         f.semantic_fields_for :image_attributes do |image_fields|
-         image_fields.input :_destroy, as: :boolean, label: 'Delete?'
-         end
-       end
+      if f.object.image.present?
+        f.semantic_fields_for :image_attributes do |image_fields|
+          image_fields.input :_destroy, as: :boolean, label: 'Delete?'
+        end
+      end
     end
-    f.actions
 
     f.has_many :sub_categories do |sub_category|
       sub_category.inputs "Sub Categories" do
@@ -32,6 +31,8 @@ ActiveAdmin.register Category do
         sub_category.input :slug
       end
     end
+
+    f.actions
   end
 
   show do |category|

@@ -1,7 +1,7 @@
 class Api::V1::SubCategoriesController < Api::BaseController
 	respond_to :json
-  before_action :authenticate_with_token!
-	load_and_authorize_resource
+  before_action :authenticate_with_token!, except: [:index]
+	load_and_authorize_resource  except: [:index]
 	
   before_action :set_category
   before_action :set_sub_category, only: [:update, :destroy]

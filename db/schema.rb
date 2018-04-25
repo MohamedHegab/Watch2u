@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180423115448) do
+ActiveRecord::Schema.define(version: 20180425060247) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -76,6 +76,38 @@ ActiveRecord::Schema.define(version: 20180423115448) do
     t.index ["slug"], name: "index_categories_on_slug", unique: true
   end
 
+  create_table "order_products", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "order_id"
+    t.uuid "product_id"
+    t.float "price", default: 0.0, null: false
+    t.integer "quantity"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["order_id"], name: "index_order_products_on_order_id"
+    t.index ["product_id"], name: "index_order_products_on_product_id"
+  end
+
+  create_table "orders", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.float "sub_total", default: 0.0, null: false
+    t.integer "status"
+    t.string "number", default: "0", null: false
+    t.float "total_price", default: 0.0, null: false
+    t.integer "customer_id"
+    t.integer "payment_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["customer_id"], name: "index_orders_on_customer_id"
+    t.index ["number"], name: "index_orders_on_number"
+    t.index ["payment_id"], name: "index_orders_on_payment_id"
+  end
+
+  create_table "payments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_payments_on_name"
+  end
+
   create_table "product_images", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "image_file_name"
     t.string "image_content_type"
@@ -93,12 +125,10 @@ ActiveRecord::Schema.define(version: 20180423115448) do
     t.float "price", null: false
     t.integer "discount"
     t.uuid "sub_category_id"
-    t.uuid "category_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "slug"
-    t.index ["category_id"], name: "index_products_on_category_id"
-    t.index ["name", "sub_category_id", "category_id"], name: "index_products_on_name_and_sub_category_id_and_category_id"
+    t.integer "category_id"
     t.index ["slug"], name: "index_products_on_slug", unique: true
     t.index ["sub_category_id"], name: "index_products_on_sub_category_id"
   end
@@ -182,8 +212,9 @@ ActiveRecord::Schema.define(version: 20180423115448) do
 
   add_foreign_key "addresses", "regions"
   add_foreign_key "addresses", "users"
+  add_foreign_key "order_products", "orders"
+  add_foreign_key "order_products", "products"
   add_foreign_key "product_images", "products"
-  add_foreign_key "products", "categories"
   add_foreign_key "products", "sub_categories"
   add_foreign_key "sub_categories", "categories"
   add_foreign_key "users", "regions"

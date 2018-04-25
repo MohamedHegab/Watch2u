@@ -2,7 +2,11 @@ class Api::V1::RegionController < ApplicationController
 	respond_to :json
 
 	def index
-		@regions = Region.all
+		page_size = params[:page_size]
+    @q = Region.ransack(params[:q])
+    @q.sorts = 'created_at' if @q.sorts.empty?
+
+    @regions = @q.result.page(page_size)
     render_success(:index, :ok, nil, @regions)
 	end
 end

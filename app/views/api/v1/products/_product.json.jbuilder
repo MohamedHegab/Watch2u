@@ -1,4 +1,4 @@
-json.extract! product, :id, :name, :slug, :description, :price, :discount, :product_images, :created_at, :updated_at
+json.extract! product, :id, :name, :description, :price, :discount, :new_price, :created_at, :updated_at
 
 json.images do
   json.array! product.product_images do |product_image|

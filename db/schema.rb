@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180425060247) do
+ActiveRecord::Schema.define(version: 20180427215446) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -92,13 +92,11 @@ ActiveRecord::Schema.define(version: 20180425060247) do
     t.integer "status"
     t.string "number", default: "0", null: false
     t.float "total_price", default: 0.0, null: false
-    t.integer "customer_id"
-    t.integer "payment_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["customer_id"], name: "index_orders_on_customer_id"
+    t.uuid "customer_id"
+    t.uuid "payment_id"
     t.index ["number"], name: "index_orders_on_number"
-    t.index ["payment_id"], name: "index_orders_on_payment_id"
   end
 
   create_table "payments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -123,12 +121,12 @@ ActiveRecord::Schema.define(version: 20180425060247) do
     t.string "name", default: "", null: false
     t.text "description", default: "", null: false
     t.float "price", null: false
-    t.integer "discount"
     t.uuid "sub_category_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "slug"
     t.uuid "category_id"
+    t.integer "discount", default: 0
     t.index ["slug"], name: "index_products_on_slug", unique: true
     t.index ["sub_category_id"], name: "index_products_on_sub_category_id"
   end

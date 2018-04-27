@@ -15,20 +15,20 @@ ActiveAdmin.register SubCategory do
       f.input :category, :as => :select, :collection => Category.all.map {|u| [u.name, u.id]}, :include_blank => false
 
     end
-    f.has_many :products do |product|
-      product.inputs "Sub Categories" do
-        if !product.object.nil?
-          # show the destroy checkbox only if it is an existing appointment
-          # else, there's already dynamic JS to add / remove new appointments
-          product.input :_destroy, :as => :boolean, :label => "Destroy?"
-        end
+    # f.has_many :products do |product|
+    #   product.inputs "Sub Categories" do
+    #     if !product.object.nil?
+    #       # show the destroy checkbox only if it is an existing appointment
+    #       # else, there's already dynamic JS to add / remove new appointments
+    #       product.input :_destroy, :as => :boolean, :label => "Destroy?"
+    #     end
 
-        product.input :name # it should automatically generate a drop-down select to choose from your existing patients
-        product.input :description
-        product.input :price
-        product.input :discount
-      end
-    end
+    #     product.input :name # it should automatically generate a drop-down select to choose from your existing patients
+    #     product.input :description
+    #     product.input :price
+    #     product.input :discount
+    #   end
+    # end
 
     f.actions
 

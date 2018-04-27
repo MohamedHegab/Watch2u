@@ -59,7 +59,7 @@ class User < ApplicationRecord
   validates_attachment_content_type :image, content_type: /\Aimage\/.*\z/
   
   has_many :addresses, dependent: :destroy
-  has_many :orders, inverse_of: :customer, dependent: :destroy
+  has_many :orders, class_name: 'Order', inverse_of: 'customer', dependent: :destroy, foreign_key: :customer_id
   belongs_to :region
   accepts_nested_attributes_for :addresses
 

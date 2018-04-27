@@ -37,6 +37,12 @@ class Product < ApplicationRecord
 		end
 	end
 
+	def new_price
+		if price
+			price - (price * (discount||0)/100)
+		end
+	end
+
 	private
 
 	def should_generate_new_friendly_id?

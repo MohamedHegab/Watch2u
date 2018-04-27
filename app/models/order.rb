@@ -7,33 +7,31 @@
 #  status      :integer
 #  number      :string           default("0"), not null
 #  total_price :float            default(0.0), not null
-#  customer_id :integer
-#  payment_id  :integer
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
+#  customer_id :uuid
+#  payment_id  :uuid
 #
 
 class Order < ApplicationRecord
 	enum status: [ :draft, :pending, :dispatched, :delivered ]
 	############ validations ############
-	validates_presence_of :sub_total, :status, :number, :total_price
 	validates :sub_total, :total_price, numericality: { greater_than_or_equal_to: 0 }
 	validate :sub_total_check
 	validate :user_has_only_one_draft
 
 	############ Assocciations ############
-  belongs_to :customer, class_name: 'User', foreign_key: :customer_id
-  belongs_to :payment
-  has_many :order_products
+  belongs_to :customer, class_name: 'User', inverse_of: :orders, foreign_key: :customer_id
+  belongs_to :payment, optional: true
+  has_many :order_products, inverse_of: :order, dependent: :destroy
   has_many :products, through: :order_products
-  before_validation :calculate_sub_total
-  before_validation :set_status
-  before_validation :set_number
+  accepts_nested_attributes_for :order_products
+
+  ########### Callbacks #################
+  before_create :set_status
+  before_create :set_number
 
   scope :not_draft , -> {where.not(status: :draft)}
-
-	############ Callbacks ############
-
 
 	########### Validation methods #########
 	def sub_total_check
@@ -44,20 +42,22 @@ class Order < ApplicationRecord
 	end
 
 	def user_has_only_one_draft
-		if Order.find_by(customer_id: self.customer_id, status: :draft)
+		Order.where(status: :pending)
+		if Order.where(customer_id: self.customer_id, status: :draft).reject{|p| p.id == self.id}.any?
 			errors.add(:base, message: 'must complete your order first')
 		end
 	end
-	
+
 	############# Calculation methods #########
 	def products_cost
 		# summes the costs of each product in the order_product table
-		order_products.collect(&:q_p_cost).reduce(:+) || 0
+		cost = order_products.collect(&:q_p_cost).reduce(:+) || 0
+		return cost.round(3)
 	end
 
 	def calculate_sub_total
-		# Calculate the subtotal field of the database
-		self.sub_total = products_cost || 0
+		# Calculate the subtotal field of the database from the order_product Model
+		self.update(sub_total: products_cost || 0)
 	end
 
 	def set_status
@@ -66,13 +66,15 @@ class Order < ApplicationRecord
 	end
 	
 	def set_number
-		last_this_year_order = Order.find_by('extract(year  from created_at) = ?', Date.today.year)
-		if last_this_year_order
-			self.number = "#{Date.today.year}_#{last_this_year_order.last.number.next}"
+		last_this_year_order = Order.where('extract(year  from created_at) = ?', Date.today.year)
+		if last_this_year_order.any?
+			self.number = "#{last_this_year_order.last.number.next}"
 		else
 			self.number = "#{Date.today.year}_#{1}"
 		end
 	end
 
-
+	def name
+		"#{number}"
+	end
 end

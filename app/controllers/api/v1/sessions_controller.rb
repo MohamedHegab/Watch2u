@@ -2,7 +2,7 @@ class Api::V1::SessionsController < Api::BaseController
 
   def create
     @user = User.where(email: params[:user][:email]).first
-    if @user&.valid_password?(params[:user][:password])
+    if @user&.valid_password?(params[:user][:password]) && @user.has_role?(params[:user][:role_input])
       sign_in @user, store: false
       @user.generate_authentication_token!
       @user.save

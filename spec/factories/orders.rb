@@ -7,10 +7,10 @@
 #  status      :integer
 #  number      :string           default("0"), not null
 #  total_price :float            default(0.0), not null
-#  customer_id :integer
-#  payment_id  :integer
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
+#  customer_id :uuid
+#  payment_id  :uuid
 #
 
 FactoryBot.define do

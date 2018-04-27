@@ -19,7 +19,7 @@ class Api::V1::OrdersController < Api::BaseController
 	end
 
 	def update
-		if @order.update(order_params)
+    if @order.update(order_params)
       render_success(:show, :ok, nil, @order)
     else
       render_validation_error(:show, t('order.order_can_not_be_updated'), 8000)
@@ -50,6 +50,6 @@ class Api::V1::OrdersController < Api::BaseController
 	end
 
   def order_params
-    params.require(:order).permit(:customer_id)
+    params.require(:order).permit(:customer_id, :status)
   end
 end

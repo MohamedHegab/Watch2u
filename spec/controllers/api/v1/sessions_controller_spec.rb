@@ -10,7 +10,7 @@ describe Api::V1::SessionsController do
     context "when the credentials are correct" do
 
       before(:each) do
-        credentials = { email: @user.email, password: "MyPassword123" }
+        credentials = { email: @user.email, password: "MyPassword123", role_input: 'admin' }
         post :create, params:{ user: credentials }
       end
 

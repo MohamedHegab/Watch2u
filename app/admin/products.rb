@@ -2,12 +2,15 @@ ActiveAdmin.register Product do
   permit_params :name, :description , :sub_category_id, :category_id, :price, :discount, :product_images_attributes => [:image, :id, :_destroy]
 
   form do |f|
+    f.object.discount = 0
     f.inputs "Details" do
       f.input :category_id, :as => :select, :collection => Category.all.collect {|category| [category.name, category.id] }
       f.input :sub_category_id, :as => :select, :input_html => {'data-option-dependent' => true, 'data-option-url' => '/api/v1/categories/:product_category_id/sub_categories', 'data-option-observed' => 'product_category_id'}, :collection => (resource.category ? resource.category.sub_categories.collect {|sub_category| [sub_category.name, sub_category.id]} : []) 
       f.input :name
 			f.input :price
 			f.input :discount
+      f.input :new_price, input_html: { type: :number, readonly: true, disabled: true }
+
       f.input :description
     end
 
@@ -23,6 +26,18 @@ ActiveAdmin.register Product do
       end
     end
     f.actions
+  end
+
+  index do
+    selectable_column
+
+    column :name
+    column :price
+    column :discount
+    column :sub_category
+    column :category
+
+    actions
   end
 
   show do |product|

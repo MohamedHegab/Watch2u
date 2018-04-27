@@ -11,10 +11,18 @@ class Api::V1::OrderProductsController < Api::BaseController
 			@order = Order.create(customer_id: current_user.id)
 		end
 
-		@order_product = OrderProduct.new(order_product_params)
-		@order_product.order_id = @order.id
-
+		product = @order.order_products.find_by(product_id: order_product_params[:product_id])
+		if product
+			@order_product = product
+			order_product_quantity = @order_product.quantity || 0
+			@order_product.update(quantity: (order_product_params[:quantity].to_i + order_product_quantity))
+		else
+			@order_product = OrderProduct.new(order_product_params)
+			@order.order_products << @order_product
+		end
+		
     if @order_product.valid? && @order_product.save
+    	@order.calculate_sub_total
       render_success(:show, :created, nil, @order)
     else
       render_validation_error(:show, t('order.order_can_not_be_created'), 8000)
@@ -23,6 +31,6 @@ class Api::V1::OrderProductsController < Api::BaseController
 
 	private
 	def order_product_params
-    params.require(:order_product).permit(:quantity, :price)
+    params.require(:order_product).permit(:product_id, :quantity)
 	end
 end

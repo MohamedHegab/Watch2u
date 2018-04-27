@@ -1,10 +1,10 @@
 class Api::V1::ProductsController < Api::BaseController
 	respond_to :json
-  before_action :authenticate_with_token!
-	load_and_authorize_resource
+  before_action :authenticate_with_token!, except: [:index, :show]
+	load_and_authorize_resource except: [:index, :show]
 
-  before_action :set_category
-  before_action :set_product, only: [:update, :destroy]
+  before_action :set_category, except: [:show, :destroy]
+  before_action :set_product, only: [:update, :destroy, :show]
 
 	def index
 		page_size = params[:page_size]
@@ -12,7 +12,7 @@ class Api::V1::ProductsController < Api::BaseController
     @q.sorts = 'created_at' if @q.sorts.empty?
 
     @products = @q.result.page(page_size)
-    # @products = @products.per(page_size)
+
     render_success(:index, :ok, nil, @products)
 	end
 
@@ -32,7 +32,7 @@ class Api::V1::ProductsController < Api::BaseController
 	  @product = @sub_category.products.create(product_params)
     
     @product.save_attachments(product_params) if params[:product][:product_image_data]
-    @product.category_id = @category.id
+    @product.category_id = @sub_category.category_id
 
     if @product.valid? && @product.save
       render_success(:show, :created, nil, @product)
@@ -53,12 +53,12 @@ class Api::V1::ProductsController < Api::BaseController
 	private
 
   def set_category
-    @category = Category.find(params[:category_id])
-    @sub_category = @category.sub_categories.find(params[:sub_category_id])
+    # @category = Category.find(params[:category_id])
+    @sub_category = SubCategory.find(params[:sub_category_id])
   end
 
 	def set_product
-    @product = @sub_category.products.find(params[:id])
+    @product = Product.find(params[:id])
   end
 
 	def product_params

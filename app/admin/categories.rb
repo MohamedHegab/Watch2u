@@ -5,7 +5,7 @@ ActiveAdmin.register Category do
 # permit_params :list, :of, :attributes, :on, :model
   menu :parent => "Category"
   # has_many :sub_categories, dependent: :destroy
-  permit_params :name, :image ,sub_categories_attributes:[:id, :name ,:image] , category_attributes: [:_destroy]
+  permit_params :name, :image ,sub_categories_attributes:[:id, :name ,:image, :_destroy]
 
   form do |f|
     f.semantic_errors
@@ -21,14 +21,14 @@ ActiveAdmin.register Category do
 
     f.has_many :sub_categories do |sub_category|
       sub_category.inputs "Sub Categories" do
-        if !sub_category.object.nil?
-          # show the destroy checkbox only if it is an existing appointment
-          # else, there's already dynamic JS to add / remove new appointments
-          sub_category.input :_destroy, :as => :boolean, :label => "Destroy?"
-        end
+        # if !sub_category.object.nil?
+        #   # show the destroy checkbox only if it is an existing appointment
+        #   # else, there's already dynamic JS to add / remove new appointments
+        #   sub_category.input :_destroy, :as => :boolean, :label => "Destroy?"
+        # end
 
         sub_category.input :name # it should automatically generate a drop-down select to choose from your existing patients
-        sub_category.input :slug
+        sub_category.input :image, as: :file
       end
     end
 

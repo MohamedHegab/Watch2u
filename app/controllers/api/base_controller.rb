@@ -41,7 +41,7 @@ class Api::BaseController < ApplicationController
   end
 
   def render_error(message, code=2000, data={}, status= :ok)
-    @response = {error: true, message: message, code: code, status: '200'}
+    @response = {error: true, message: message, code: code, status: :fail}
     render :partial => 'api/v1/errors', layout: 'jsend', status: :ok, :formats => [:json]
   end
 

@@ -139,9 +139,10 @@
 
 Rails.application.routes.draw do
 
-    devise_for :admin_users, ActiveAdmin::Devise.config
-    ActiveAdmin.routes(self)
-    root to: "admin/dashboard#index"
+  devise_for :users, ActiveAdmin::Devise.config.merge(skip: [:confirmations, :passwords, :registrations, :unlocks])
+
+  ActiveAdmin.routes(self)
+  root to: "admin/dashboard#index"
 
   scope "(:locale)", locale: /#{I18n.available_locales.join('|')}/ do
     namespace :api, defaults: {format: 'json'} do
@@ -170,5 +171,4 @@ Rails.application.routes.draw do
       end
     end
   end
-  devise_for :users
 end

@@ -14,4 +14,9 @@ class ApplicationController < ActionController::Base
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up, keys: [:first_name, :last_name, :address, :region, :code, :mobile, :auth_token, :role_input])
   end
+
+  # def authenticate_admin_user!
+  #   return nil if user_signed_in? && !(current_user.has_role? :admin)
+  #   authenticate_user!
+  # end
 end

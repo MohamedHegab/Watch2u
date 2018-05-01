@@ -24,7 +24,7 @@ class Api::V1::ProductsController < Api::BaseController
 		if @product.update(product_params)
       render_success(:show, :ok, nil, @product)
     else
-      render_validation_error(:show, t('product.product_can_not_be_updated'), 8000)
+      render_validation_error(:show, validation_message_maker(@product), 8000)
     end
 	end
 
@@ -37,7 +37,7 @@ class Api::V1::ProductsController < Api::BaseController
     if @product.valid? && @product.save
       render_success(:show, :created, nil, @product)
     else
-      render_validation_error(:show, t('product.product_can_not_be_created'), 8000)
+      render_validation_error(:show, validation_message_maker(@product), 8000)
     end
 	end
 
@@ -46,7 +46,7 @@ class Api::V1::ProductsController < Api::BaseController
     if @product.destroy
       render_success(:show, :deleted)
     else
-      render_validation_error(:show, t('product.product_can_not_be_deleted'), 8000)
+      render_validation_error(:show, validation_message_maker(@product), 8000)
     end
 	end
 

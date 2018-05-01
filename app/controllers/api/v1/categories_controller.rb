@@ -2,7 +2,7 @@ class Api::V1::CategoriesController < Api::BaseController
 	respond_to :json
   before_action :authenticate_with_token!, except: [:index]
 	load_and_authorize_resource except: [:index]
-	
+
   before_action :set_category, only: [:show, :update, :destroy]
 
 	def index
@@ -22,7 +22,7 @@ class Api::V1::CategoriesController < Api::BaseController
 		if @category.update(category_params)
       render_success(:show, :ok, nil, @category)
     else
-      render_validation_error(:show, t('category.category_can_not_be_updated'), 8000)
+      render_validation_error(:show, validation_message_maker(@category), 8000)
     end
 	end
 
@@ -31,7 +31,7 @@ class Api::V1::CategoriesController < Api::BaseController
     if @category.valid? && @category.save
       render_success(:show, :created, nil, @category)
     else
-      render_validation_error(:show, t('category.category_can_not_be_created'), 8000)
+      render_validation_error(:show, validation_message_maker(@category), 8000)
     end
 	end
 
@@ -40,7 +40,7 @@ class Api::V1::CategoriesController < Api::BaseController
     if @category.destroy
       render_success(:show, :deleted)
     else
-      render_validation_error(:show, t('category.category_can_not_be_deleted'), 8000)
+      render_validation_error(:show, validation_message_maker(@category), 8000)
     end
 	end
 

@@ -12,6 +12,10 @@ class Api::BaseController < ApplicationController
     current_user.present?
   end
 
+  def validation_message_maker resource
+    return resource.errors.full_messages.join(' & ')
+  end
+
   def trim_string st, all = nil
     if all.nil?
       st = st.gsub(/ +/, " ")

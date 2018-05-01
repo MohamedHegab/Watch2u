@@ -23,7 +23,7 @@ class Api::V1::UsersController < Api::BaseController
       UserMailer.welcome_email(@user).deliver_later
       render_success(:show, :created)
     else
-      render_validation_error(:show, t('text.user_can_not_be_created'), 2000)
+      render_validation_error(:show, validation_message_maker(@user), 2000)
     end
   end
 
@@ -38,7 +38,7 @@ class Api::V1::UsersController < Api::BaseController
     if @user.valid? && @user.update(user_params)
       render_success(:show, :ok)
     else
-      render_validation_error(:show, t('text.user_can_not_be_updated'), 2000)
+      render_validation_error(:show, validation_message_maker(@user), 2000)
     end
   end
 

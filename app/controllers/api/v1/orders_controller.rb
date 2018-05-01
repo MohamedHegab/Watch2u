@@ -38,7 +38,7 @@ class Api::V1::OrdersController < Api::BaseController
     if @order.update(order_params)
       render_success(:show, :ok, nil, @order)
     else
-      render_validation_error(:show, t('order.order_can_not_be_updated'), 8000)
+      render_validation_error(:show, validation_message_maker(@order), 8000)
     end
 	end
 
@@ -48,7 +48,7 @@ class Api::V1::OrdersController < Api::BaseController
     if @order.valid? && @order.save
       render_success(:show, :created, nil, @order)
     else
-      render_validation_error(:show, t('order.order_can_not_be_created'), 8000)
+      render_validation_error(:show, validation_message_maker(@order), 8000)
     end
 	end
 
@@ -57,7 +57,7 @@ class Api::V1::OrdersController < Api::BaseController
     if @order.destroy
       render_success(:show, :deleted)
     else
-      render_validation_error(:show, t('order.order_can_not_be_deleted'), 8000)
+      render_validation_error(:show, validation_message_maker(@order), 8000)
     end
 	end
 

@@ -27,7 +27,7 @@ class Api::V1::OrderProductsController < Api::BaseController
     	@order.calculate_sub_total
       render_success(:show, :created, nil, @order)
     else
-      render_validation_error(:show, t('order.order_can_not_be_created'), 8000)
+      render_validation_error(:show, validation_message_maker(@order), 8000)
     end
 	end
 

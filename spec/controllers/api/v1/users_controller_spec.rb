@@ -49,7 +49,7 @@ describe Api::V1::UsersController, type: :controller do
         expect(user_response[:data][:validation_errors][0][:messages][0]).to include "can't be blank"
       end
 
-      it { should respond_with 422 }
+      it { should respond_with 200 }
     end
   end
 
@@ -90,7 +90,7 @@ describe Api::V1::UsersController, type: :controller do
         expect(user_response[:data][:validation_errors][0][:messages][0]).to include "not included in the list"
       end
 
-      it { should respond_with 422 }
+      it { should respond_with 200 }
     end
   end
 

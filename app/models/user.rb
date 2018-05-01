@@ -55,7 +55,7 @@ class User < ApplicationRecord
   enumerize :gender, in: {male: 0, female: 1}, scope: true
   enumerize :role_input, in: {customer: 0, sales: 1, admin: 2}, scope: true
 
-  has_attached_file :image, styles: { medium: "300x300>", thumb: "100x100>" }, default_url: "/images/missing.jpg"
+  has_attached_file :image, styles: { medium: "1000x1000>", small: "400x400>" }, default_url: "/images/missing.jpg"
   validates_attachment_content_type :image, content_type: /\Aimage\/.*\z/
   
   has_many :addresses, dependent: :destroy
@@ -66,6 +66,7 @@ class User < ApplicationRecord
   ############## Callbacks #################
   before_validation :parse_image
   before_create :fix_attributes
+  before_create :generate_authentication_token!
   before_update :fix_attributes
   before_create :assign_role
 
@@ -83,7 +84,6 @@ class User < ApplicationRecord
     self.email = trim_string(self.email.downcase, true)
     self.first_name = trim_string(self.first_name)
     self.last_name = trim_string(self.last_name)
-    generate_authentication_token!
   end
 
   def username

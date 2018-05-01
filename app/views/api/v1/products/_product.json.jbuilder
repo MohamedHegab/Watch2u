@@ -2,6 +2,8 @@ json.extract! product, :id, :name, :description, :price, :discount, :new_price, 
 
 json.images do
   json.array! product.product_images do |product_image|
+    json.image_url_original (asset_url(product_image.image.url(:original)))
+    json.image_url_medium (asset_url(product_image.image.url(:medium)))
     json.image_url_small (asset_url(product_image.image.url(:small)))
   end
 end

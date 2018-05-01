@@ -24,7 +24,7 @@ class Api::V1::SubCategoriesController < Api::BaseController
 		if @sub_category.update(sub_category_params)
       render_success(:show, :ok, nil, @sub_category)
     else
-      render_validation_error(:show, t('sub_category.sub_category_can_not_be_updated'), 8000)
+      render_validation_error(:show, validation_message_maker(@sub_category), 8000)
     end
 	end
 
@@ -33,7 +33,7 @@ class Api::V1::SubCategoriesController < Api::BaseController
     if @sub_category.valid? && @sub_category.save
       render_success(:show, :created, nil, @sub_category)
     else
-      render_validation_error(:show, t('sub_category.sub_category_can_not_be_created'), 8000)
+      render_validation_error(:show, validation_message_maker(@sub_category), 8000)
     end
 	end
 
@@ -42,7 +42,7 @@ class Api::V1::SubCategoriesController < Api::BaseController
     if @sub_category.destroy
       render_success(:show, :deleted)
     else
-      render_validation_error(:show, t('sub_category.sub_category_can_not_be_deleted'), 8000)
+      render_validation_error(:show, validation_message_maker(@sub_category), 8000)
     end
 	end
 

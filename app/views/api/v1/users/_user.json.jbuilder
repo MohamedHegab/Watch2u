@@ -12,4 +12,7 @@ json.addresses_attributes do
   json.array! user.addresses, partial: 'api/v1/address/address', as: :address
 end
 json.region user.region if user.region
+json.image_url_original (asset_url(user.image.url(:original)))
+json.image_url_medium (asset_url(user.image.url(:medium)))
+json.image_url_small (asset_url(user.image.url(:small)))
 json.partial! 'api/v1/validation_error', object: user

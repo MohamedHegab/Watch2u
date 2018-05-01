@@ -53,7 +53,7 @@ RSpec.describe Api::V1::SubCategoriesController, type: :controller do
         expect(sub_category_response[:data][:validation_errors][0][:messages][0]).to include "can't be blank"
       end
 
-      it { should respond_with 422 }
+      it { should respond_with 200 }
     end
 
     context "when is not created has no authorization" do
@@ -115,7 +115,7 @@ RSpec.describe Api::V1::SubCategoriesController, type: :controller do
         expect(sub_category_response[:data][:validation_errors][0][:messages][0]).to include "can't be blank"
       end
 
-      it { should respond_with 422 }
+      it { should respond_with 200 }
     end
 
     context "when is not created has no authorization" do

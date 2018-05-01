@@ -12,6 +12,10 @@ class Api::BaseController < ApplicationController
     current_user.present?
   end
 
+  def validation_message_maker resource
+    return resource.errors.full_messages.join(' & ')
+  end
+
   def trim_string st, all = nil
     if all.nil?
       st = st.gsub(/ +/, " ")
@@ -32,17 +36,17 @@ class Api::BaseController < ApplicationController
 
   def render_validation_error(action, message, code=1)
     @response = {fail: true, message: message, code: code}
-    render action, layout: 'jsend', status: 422
+    render action, layout: 'jsend', status: 200
   end
 
   def render_fail(message, code=2001, data={})
     @response = {fail: true, message: message, code: code}
-    render :partial => 'api/v1/errors', layout: 'jsend', status: 422, :formats => [:json]
+    render :partial => 'api/v1/errors', layout: 'jsend', status: 200, :formats => [:json]
   end
 
   def render_error(message, code=2000, data={}, status= :ok)
     @response = {error: true, message: message, code: code, status: :fail}
-    render :partial => 'api/v1/errors', layout: 'jsend', status: :ok, :formats => [:json]
+    render :partial => 'api/v1/errors', layout: 'jsend', status: 200, :formats => [:json]
   end
 
   private

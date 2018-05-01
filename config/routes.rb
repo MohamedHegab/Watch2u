@@ -140,6 +140,8 @@ Rails.application.routes.draw do
         resources :regions, only: [:index]
         resources :payments, only: [:index]
         resources :shipping
+        get 'profile' => 'users#show'
+        put 'profile' => 'users#update'
         post 'users/signup' => 'users#create'
         post 'users/signin' => 'sessions#create'
         post 'password/forgot', to: 'password#forgot'

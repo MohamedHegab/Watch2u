@@ -17,7 +17,7 @@
 
 class Address < ApplicationRecord
 	############ validations ############
-	validates_presence_of :lat, :lng, :street_address
+	validates_presence_of :street_address
 
 	############ Assocciations ############
   belongs_to :user, inverse_of: :addresses

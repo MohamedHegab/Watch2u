@@ -20,8 +20,6 @@ RSpec.describe Address, type: :model do
 
   subject { @address }
 
-	it { should validate_presence_of(:lat) }
-	it { should validate_presence_of(:lng) }
 	it { should validate_presence_of(:street_address) }
 
   it { should belong_to(:user) }

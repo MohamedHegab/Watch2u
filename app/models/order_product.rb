@@ -14,16 +14,22 @@
 class OrderProduct < ApplicationRecord
 	attr_accessor :discount, :new_price, :total_price
 	############ validations ############
-	validates_presence_of :quantity, :price
+	validates_presence_of :quantity
 	validates :quantity, :price, numericality: { greater_than_or_equal_to: 0 }
+	# validate :product_is_present
 	
 	############ Assocciations ############
   belongs_to :order, inverse_of: :order_products
   belongs_to :product
 
 	############ Callbacks ############
-  before_validation :get_price_from_product
+  before_save :get_price_from_product
 
+  # def product_is_present
+  # 	unless Product.find(self.product_id)
+		# 	errors.add(:base, 'There is no product with that id')
+  # 	end
+  # end
 
 	def q_p_cost
 		cost = self.quantity * self.price

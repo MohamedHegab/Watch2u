@@ -19,6 +19,22 @@ class Api::V1::OrdersController < Api::BaseController
 	end
 
 	def update
+
+    if params[:order][:payment]
+      payment = Payment.find(params[:order][:payment][:id]) 
+      @order.payment = payment
+    end
+
+    if params[:order][:shipping]
+      shipping = Shipping.find(params[:order][:shipping][:id]) 
+      @order.shipping = shipping
+    end
+
+    if params[:order][:address]
+      address = Address.find(params[:order][:address][:id]) 
+      @order.address = address
+    end
+
     if @order.update(order_params)
       render_success(:show, :ok, nil, @order)
     else
@@ -28,6 +44,7 @@ class Api::V1::OrdersController < Api::BaseController
 
 	def create
 	  @order = Order.create(order_params)
+
     if @order.valid? && @order.save
       render_success(:show, :created, nil, @order)
     else
@@ -50,6 +67,6 @@ class Api::V1::OrdersController < Api::BaseController
 	end
 
   def order_params
-    params.require(:order).permit(:customer_id, :status)
+    params.require(:order).permit(:customer_id, :status, :address_id)
   end
 end

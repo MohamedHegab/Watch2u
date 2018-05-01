@@ -19,10 +19,13 @@ class Order < ApplicationRecord
 	validates :sub_total, :total_price, numericality: { greater_than_or_equal_to: 0 }
 	validate :sub_total_check
 	validate :user_has_only_one_draft
+	validate :address_is_for_same_customer
 
 	############ Assocciations ############
   belongs_to :customer, class_name: 'User', inverse_of: :orders, foreign_key: :customer_id
   belongs_to :payment, optional: true
+  belongs_to :address, optional: true
+	belongs_to :shipping, optional: true
   has_many :order_products, inverse_of: :order, dependent: :destroy
   has_many :products, through: :order_products
   accepts_nested_attributes_for :order_products
@@ -37,14 +40,22 @@ class Order < ApplicationRecord
 	def sub_total_check
 		# check if the sub_total field equals the sum of each product
 		if products_cost != self.sub_total
-			errors.add(:sub_total, message: 'wrong sub total')
+			errors.add(:sub_total, 'wrong sub total')
 		end
 	end
 
 	def user_has_only_one_draft
 		Order.where(status: :pending)
 		if Order.where(customer_id: self.customer_id, status: :draft).reject{|p| p.id == self.id}.any?
-			errors.add(:base, message: 'must complete your order first')
+			errors.add(:base, 'must complete your order first')
+		end
+	end
+
+	def address_is_for_same_customer
+		if self.address_id
+			unless customer.addresses.find_by(id: self.address_id)
+				errors.add(:address_id, 'this address is not for you')
+			end
 		end
 	end
 

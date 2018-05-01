@@ -11,6 +11,7 @@ class Api::V1::OrderProductsController < Api::BaseController
 			@order = Order.create(customer_id: current_user.id)
 		end
 
+		##### to find if the product is added to cart before or not
 		product = @order.order_products.find_by(product_id: order_product_params[:product_id])
 		if product
 			@order_product = product
@@ -20,6 +21,7 @@ class Api::V1::OrderProductsController < Api::BaseController
 			@order_product = OrderProduct.new(order_product_params)
 			@order.order_products << @order_product
 		end
+		##########################################################
 		
     if @order_product.valid? && @order_product.save
     	@order.calculate_sub_total

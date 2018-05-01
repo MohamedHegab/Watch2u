@@ -1,4 +1,4 @@
-class Api::V1::AddressController < ApplicationController
+class Api::V1::AddressController < Api::BaseController
 	respond_to :json
   before_action :authenticate_with_token!
 	load_and_authorize_resource

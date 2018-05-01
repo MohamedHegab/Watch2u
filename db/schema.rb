@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180427215446) do
+ActiveRecord::Schema.define(version: 20180501021445) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -96,6 +96,9 @@ ActiveRecord::Schema.define(version: 20180427215446) do
     t.datetime "updated_at", null: false
     t.uuid "customer_id"
     t.uuid "payment_id"
+    t.uuid "address_id"
+    t.integer "shipping_id"
+    t.index ["address_id"], name: "index_orders_on_address_id"
     t.index ["number"], name: "index_orders_on_number"
   end
 
@@ -145,6 +148,13 @@ ActiveRecord::Schema.define(version: 20180427215446) do
     t.datetime "updated_at", null: false
     t.index ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id"
     t.index ["resource_type", "resource_id"], name: "index_roles_on_resource_type_and_resource_id"
+  end
+
+  create_table "shippings", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name", default: "", null: false
+    t.float "fees", default: 0.0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "sub_categories", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -212,6 +222,7 @@ ActiveRecord::Schema.define(version: 20180427215446) do
   add_foreign_key "addresses", "users"
   add_foreign_key "order_products", "orders"
   add_foreign_key "order_products", "products"
+  add_foreign_key "orders", "addresses"
   add_foreign_key "product_images", "products"
   add_foreign_key "products", "sub_categories"
   add_foreign_key "sub_categories", "categories"

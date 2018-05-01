@@ -22,6 +22,7 @@ class Address < ApplicationRecord
 	############ Assocciations ############
   belongs_to :user, inverse_of: :addresses
   belongs_to :region
+  has_many :orders
 
 	############ Callbacks ############
   before_validation :set_region_from_user

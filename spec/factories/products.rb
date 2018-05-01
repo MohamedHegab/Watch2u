@@ -6,12 +6,12 @@
 #  name            :string           default(""), not null
 #  description     :text             default(""), not null
 #  price           :float            not null
-#  discount        :integer
 #  sub_category_id :uuid
-#  category_id     :uuid
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #  slug            :string
+#  category_id     :uuid
+#  discount        :integer          default(0)
 #
 
 FactoryBot.define do

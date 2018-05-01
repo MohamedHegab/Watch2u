@@ -21,7 +21,7 @@ class Category < ApplicationRecord
 	validates_with AttachmentSizeValidator, attributes: :image, less_than: 2.megabytes
 
 	############ Assocciations ############
-	has_attached_file :image, styles: { medium: "300x300>", thumb: "100x100>" }, default_url: "/images/missing.jpg"
+	has_attached_file :image, styles: { medium: "1000x1000>", small: "400x400>" }, default_url: "/images/missing.jpg"
   validates_attachment_content_type :image, content_type: /\Aimage\/.*\z/
 	has_many :sub_categories, dependent: :destroy
 	accepts_nested_attributes_for :sub_categories

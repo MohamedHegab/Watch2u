@@ -2,7 +2,7 @@ class Api::V1::UsersController < Api::BaseController
   respond_to :json
 
   before_action :authenticate_with_token!, except: [:create]
-  before_action :set_user, only: [:show, :update]
+  before_action :set_user, only: [:show, :update, :destroy]
 
   def show
     render_success(:show, :ok)
@@ -31,10 +31,16 @@ class Api::V1::UsersController < Api::BaseController
     email = params[:user][:email]
     if email.present?
       if @user.email != email
-        render_error(t('text.user_can_not_be_updated_email_cannot_be_changes'), 2000)
+        render_error(t('text.user_can_not_be_updated_email_cannot_be_changed'), 2000)
         return
       end
     end
+
+    if params[:user][:region]
+      region = Region.find(params[:user][:region][:id]) 
+      @user.region = region
+    end
+
     if @user.valid? && @user.update(user_params)
       render_success(:show, :ok)
     else
@@ -63,11 +69,11 @@ class Api::V1::UsersController < Api::BaseController
   private
 
   def user_params
-    params.require(:user).permit(:email, :mobile, :code, :first_name, :last_name, :password, :password_confirmation, :gender, :role_input, {addresses_attributes: [:street_address, :floor_no, :building_no, :lat, :lng]} )
+    params.require(:user).permit(:email, :mobile, :code, :image_content, :image_file_name, :first_name, :last_name, :password, :password_confirmation, :gender, :role_input, {addresses_attributes: [:id, :street_address, :floor_no, :building_no, :lat, :lng]} )
   end
 
   def set_user
-    @user = User.find(params[:id])
+    @user = current_user
   end
 
 end

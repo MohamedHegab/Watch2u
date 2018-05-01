@@ -136,8 +136,10 @@ Rails.application.routes.draw do
 	      end
         resources :orders
         resources :order_products, only: [:create]
+        resource :cart, only: [:show, :update]
         resources :regions, only: [:index]
         resources :payments, only: [:index]
+        resources :shipping
         post 'users/signup' => 'users#create'
         post 'users/signin' => 'sessions#create'
         post 'password/forgot', to: 'password#forgot'

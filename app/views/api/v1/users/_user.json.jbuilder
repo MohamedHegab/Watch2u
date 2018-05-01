@@ -9,7 +9,7 @@ json.mobile user.mobile
 json.gender user.gender.value if user.gender
 json.auth_token user.auth_token
 json.addresses_attributes do
-  json.array! user.addresses, partial: 'api/v1/address/address', as: :address
+  json.array! user.addresses, partial: 'api/v1/addresses/address', as: :address
 end
 json.region user.region if user.region
 json.image_url_original (asset_url(user.image.url(:original)))

@@ -1,0 +1,1 @@
+json.extract! shipping, :id, :name, :fees, :created_at, :updated_at

@@ -1,4 +1,4 @@
-class Api::V1::ShippingsController < ApplicationController
+class Api::V1::ShippingsController < Api::BaseController
 	respond_to :json
   before_action :authenticate_with_token!
 	load_and_authorize_resource

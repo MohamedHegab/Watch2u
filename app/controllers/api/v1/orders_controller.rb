@@ -21,7 +21,6 @@ class Api::V1::OrdersController < Api::BaseController
 	end
 
 	def update
-
     if params[:order][:payment]
       payment = Payment.find(params[:order][:payment][:id]) 
       @order.payment = payment
@@ -43,7 +42,7 @@ class Api::V1::OrdersController < Api::BaseController
       render_validation_error(:show, validation_message_maker(@order), 8000)
     end
 	end
-  
+
 	def create
 	  @order = Order.create(order_params)
 

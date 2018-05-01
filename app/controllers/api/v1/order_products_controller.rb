@@ -3,10 +3,11 @@ class Api::V1::OrderProductsController < Api::BaseController
   before_action :authenticate_with_token!
 	load_and_authorize_resource
 
+	before_action :set_order
+
 	def create
-		last_user_order = current_user.orders.find_by(status: :draft)
-		if last_user_order
-			@order = last_user_order
+		if @last_user_order
+			@order = @last_user_order
 		else
 			@order = Order.create(customer_id: current_user.id)
 		end
@@ -27,12 +28,31 @@ class Api::V1::OrderProductsController < Api::BaseController
     	@order.calculate_sub_total
       render_success(:show, :created, nil, @order)
     else
-      render_validation_error(:show, validation_message_maker(@order), 8000)
+      render_validation_error(:show, validation_message_maker(@order_product), 8000)
     end
+	end
+
+	def update
+		@order = @last_user_order
+		product = @order.order_products.find_by(product_id: order_product_params[:product_id])
+		if @order && product
+			@order_product = product
+			if @order_product.update(quantity: order_product_params[:quantity].to_i )
+	      render_success(:show, :updated, nil, @order)
+			else
+	      render_validation_error(:show, validation_message_maker(@order_product), 8000)
+			end
+		else
+	    render_fail('This product is not in cart', nil, nil)
+		end 
 	end
 
 	private
 	def order_product_params
     params.require(:order_product).permit(:product_id, :quantity)
+	end
+
+	def set_order
+		@last_user_order = current_user.orders.find_by(status: :draft)
 	end
 end

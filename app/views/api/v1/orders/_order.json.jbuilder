@@ -18,5 +18,6 @@ json.products do
   	json.quantity order_product.quantity
   	json.price order_product.price
   	json.discount order_product.product.discount
+  	json.total_price order_product.q_p_cost
   end
 end

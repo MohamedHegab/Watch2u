@@ -11,9 +11,6 @@ class Api::V1::UsersController < Api::BaseController
   def create
     @user = User.new(user_params)
 
-    # @address = Address.create(user_params[:address]) if user_params[:addresses_attr]
-    # @address.user_id = @user.id
-
     if params[:user][:region]
     	region = Region.find(params[:user][:region][:id]) 
     	@user.region = region

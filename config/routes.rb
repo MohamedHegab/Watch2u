@@ -122,9 +122,7 @@ Rails.application.routes.draw do
     namespace :api, defaults: {format: 'json'} do
       namespace :v1 do
         get 'users/signout' => 'sessions#destroy'
-        resources :users do 
-        	resources :addresses
-        end
+        resources :users
         resources :sessions, only: [:create, :destroy]
 
         shallow do 
@@ -139,7 +137,9 @@ Rails.application.routes.draw do
         resource :cart, only: [:show, :update]
         resources :regions, only: [:index]
         resources :payments, only: [:index]
-        resources :shipping
+        resources :shippings
+				resources :addresses
+        put 'order_products' => 'order_products#update'
         get 'profile' => 'users#show'
         put 'profile' => 'users#update'
         post 'users/signup' => 'users#create'

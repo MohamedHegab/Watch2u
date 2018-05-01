@@ -31,6 +31,6 @@ module OrderUpdateWithParams
   private
 
   def order_params
-    params.require(:order).permit(:customer_id, :status, :address_id)
+    params.require(:order).permit(:customer_id, :status)
   end
 end

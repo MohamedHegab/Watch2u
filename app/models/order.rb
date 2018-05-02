@@ -66,9 +66,15 @@ class Order < ApplicationRecord
 		return cost.round(3)
 	end
 
-	def calculate_sub_total
+	def calculate_sub_total_and_total
 		# Calculate the subtotal field of the database from the order_product Model
-		self.update(sub_total: products_cost || 0)
+		if self.shipping_id.nil?
+			shipping_cost = 0
+		else
+			shipping_cost = self.shipping.fees.to_f
+		end
+		sub_total_cost = products_cost || 0
+		self.update(sub_total: sub_total_cost, total_price: (sub_total_cost + shipping_cost) )
 	end
 
 	def set_status

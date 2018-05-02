@@ -1,13 +1,15 @@
 class Api::V1::AddressesController < Api::BaseController
 	respond_to :json
-  before_action :authenticate_with_token!
-	load_and_authorize_resource
+  before_action :authenticate_with_token!, except: [:index]
+	load_and_authorize_resource except: [:index]
+
+  before_action :set_user
 	
   before_action :set_address, only: [:show, :update, :destroy]
 
   def index
   	page_size = params[:page_size]
-    @q = current_user.addresses.ransack(params[:q])
+    @q = @user.addresses.ransack(params[:q])
     @q.sorts = 'created_at' if @q.sorts.empty?
 
     @addresses = @q.result.page(page_size)
@@ -27,7 +29,7 @@ class Api::V1::AddressesController < Api::BaseController
 	end
 
 	def create
-	  @address = current_user.addresses.create(address_params)
+	  @address = @user.addresses.create(address_params)
     if @address.valid? && @address.save
       render_success(:show, :created, nil, @address)
     else
@@ -46,8 +48,16 @@ class Api::V1::AddressesController < Api::BaseController
 
 	private
 
+  def set_user
+    if params[:user_id]
+      @user = User.find(params[:user_id])
+    else
+      @user = current_user
+    end
+  end
+
 	def set_address
-		@address = current_user.addresses.find(params[:id])
+    @address = @user.addresses.find(params[:id])
 	end
 
 	def address_params

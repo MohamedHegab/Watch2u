@@ -122,9 +122,10 @@ Rails.application.routes.draw do
     namespace :api, defaults: {format: 'json'} do
       namespace :v1 do
         get 'users/signout' => 'sessions#destroy'
-        resources :users
+        resources :users do 
+					resources :addresses
+				end
         resources :sessions, only: [:create, :destroy]
-
         shallow do 
 	        resources :categories do
 	          resources :sub_categories do 

@@ -1,7 +1,7 @@
 class Api::V1::ShippingsController < Api::BaseController
 	respond_to :json
-  before_action :authenticate_with_token!
-	load_and_authorize_resource
+  before_action :authenticate_with_token!, except: [:show]
+	load_and_authorize_resource except: [:show]
 	
   before_action :set_shipping, only: [:show, :update, :destroy]
 

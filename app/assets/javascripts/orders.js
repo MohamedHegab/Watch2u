@@ -29,6 +29,10 @@ jQuery(document).ready(function() {
     });
 	});
 
+	$('#order_shipping_id').on('change', function() {
+		calculate_total_price();
+	});
+
 	$('.quantity_field').on('keyup', function() {
 		_this = $(this);
   	new_price = parseFloat(_this.parent().parent().find('.new_price_field').val());
@@ -43,6 +47,28 @@ jQuery(document).ready(function() {
         sum += +$(this).val();
     });
 		$('#order_sub_total').val(sum);
+  	calculate_total_price();
+	}
+
+	function calculate_total_price() {
+		sub_total = parseFloat($('#order_sub_total').val());
+		var url_mask 				= $('#order_shipping_id').data('option-url');
+		var regexp          = /:[0-9a-zA-Z_]+/g;
+		console.log("helloooooo");
+		_this = $('#order_shipping_id');
+		url = url_mask.replace(regexp, _this.val());
+		$.ajax({
+      url: url,
+      type: 'GET',
+      dataType: 'json',
+      success: function(data) { 
+      	fees = parseFloat(data.data.fees);
+      	sum = fees + sub_total;
+				$('#order_total_price').val(sum);
+      },
+      error: function(err) { console.log(err) },
+      beforeSend: setHeader
+    });
 	}
 
 	$('#edit_order').on('submit', function() {

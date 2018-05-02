@@ -33,7 +33,7 @@ jQuery(document).ready(function() {
 		var observer = $('select#'+ observer_dom_id);
 		var observed = $('select#'+ observed_dom_id);
 
-		if (!observer.val() && observed.children('option').length > 1) {
+		if (!observer.val() && observed.children('option').length < 1) {
 			observer.attr('disabled', true);
 		}
 		observed.on('change', function() {

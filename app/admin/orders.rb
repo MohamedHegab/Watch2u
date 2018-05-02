@@ -4,7 +4,7 @@ ActiveAdmin.register Order do
 #
   actions  :index, :edit, :show, :update
   
-  permit_params :customer_id, :payment_id, :status, :sub_total, :number, :total_price, :order_products_attributes => [:product_id, :quantity, :price, :discount, :id, :_destroy]
+  permit_params :customer_id, :payment_id, :address_id, :shipping_id, :status, :sub_total, :number, :total_price, :order_products_attributes => [:product_id, :quantity, :price, :discount, :id, :_destroy]
   
   show do |order|
     attributes_table do
@@ -13,6 +13,9 @@ ActiveAdmin.register Order do
       row :customer_id do
         link_to order.customer.username, admin_user_path(order.customer_id)
       end
+      row :address
+      row :payment
+      row :shipping
       row :sub_total
       row :total_price
       row :payment_id
@@ -44,7 +47,10 @@ ActiveAdmin.register Order do
 
     column :number
     column :status
-    column :customer_id
+    column :customer
+    column :address
+    column :payment
+    column :shipping
     column :sub_total
     column :total_price
 
@@ -54,11 +60,13 @@ ActiveAdmin.register Order do
   form do |f|
     f.semantic_errors
     f.inputs 'Details' do
+      f.input :number, input_html: { readonly: true, disabled: true  }
       f.input :customer_id, as: :select, collection: User.all.collect {|user| [user.username, user.id] }
-      f.input :payment_id, as: :select, collection: Payment.all.collect {|payment| [payment.username, payment.id] }
+      f.input :payment_id, as: :select, collection: Payment.all.collect {|payment| [payment.name, payment.id] }
+      f.input :shipping_id, as: :select, collection: Shipping.all.collect {|shipping| [shipping.name, shipping.id] }, input_html: {'data-option-url' => '/api/v1/shippings/:order_shipping_id'}
+      f.input :address_id, :as => :select, :input_html => {'data-option-dependent' => true, 'data-option-url' => '/api/v1/users/:order_customer_id/addresses', 'data-option-observed' => 'order_customer_id'}, :collection => (resource.customer ? resource.customer.addresses.collect {|address| [address.name, address.id]} : []) 
       f.input :status
       f.input :sub_total, input_html: { readonly: true, disabled: true  }
-      f.input :number, input_html: { readonly: true, disabled: true  }
       f.input :total_price, input_html: { readonly: true, disabled: true  }
     end
 
@@ -75,7 +83,6 @@ ActiveAdmin.register Order do
         order_product.input :discount, input_html: { type: :number,readonly: true, disabled: true, class: 'discount_field' }
         order_product.input :new_price, input_html: { type: :number, readonly: true, disabled: true, class: 'new_price_field'  }
         order_product.input :total_price, input_html: { type: :number, readonly: true, disabled: true, class: 'total_price_field'  }
-      
       end
     end
 

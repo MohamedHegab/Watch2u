@@ -30,4 +30,8 @@ class Address < ApplicationRecord
   def set_region_from_user
   	self.region = self.user.region
   end
+
+  def name
+    "#{self.street_address}"
+  end
 end

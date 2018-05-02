@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180501021445) do
+ActiveRecord::Schema.define(version: 20180502135345) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -97,9 +97,10 @@ ActiveRecord::Schema.define(version: 20180501021445) do
     t.uuid "customer_id"
     t.uuid "payment_id"
     t.uuid "address_id"
-    t.integer "shipping_id"
+    t.uuid "shipping_id"
     t.index ["address_id"], name: "index_orders_on_address_id"
     t.index ["number"], name: "index_orders_on_number"
+    t.index ["shipping_id"], name: "index_orders_on_shipping_id"
   end
 
   create_table "payments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -223,6 +224,7 @@ ActiveRecord::Schema.define(version: 20180501021445) do
   add_foreign_key "order_products", "orders"
   add_foreign_key "order_products", "products"
   add_foreign_key "orders", "addresses"
+  add_foreign_key "orders", "shippings"
   add_foreign_key "product_images", "products"
   add_foreign_key "products", "sub_categories"
   add_foreign_key "sub_categories", "categories"

@@ -25,7 +25,7 @@ class Api::V1::OrderProductsController < Api::BaseController
 		##########################################################
 		
     if @order_product.valid? && @order_product.save
-    	@order.calculate_sub_total
+    	@order.calculate_sub_total_and_total
       render_success(:show, :created, nil, @order)
     else
       render_validation_error(:show, validation_message_maker(@order_product), 8000)
@@ -38,6 +38,7 @@ class Api::V1::OrderProductsController < Api::BaseController
 		if @order && product
 			@order_product = product
 			if @order_product.update(quantity: order_product_params[:quantity].to_i )
+	    	@order.calculate_sub_total_and_total
 	      render_success(:show, :updated, nil, @order)
 			else
 	      render_validation_error(:show, validation_message_maker(@order_product), 8000)

@@ -113,7 +113,7 @@
 
 Rails.application.routes.draw do
 
-  devise_for :users, ActiveAdmin::Devise.config.merge(skip: [:confirmations, :passwords, :registrations, :unlocks])
+  devise_for :users, ActiveAdmin::Devise.config.merge(skip: [:confirmations, :registrations, :unlocks])
 
   ActiveAdmin.routes(self)
   root to: "admin/dashboard#index"

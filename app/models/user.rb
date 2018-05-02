@@ -60,7 +60,7 @@ class User < ApplicationRecord
   
   has_many :addresses, dependent: :destroy
   has_many :orders, class_name: 'Order', inverse_of: 'customer', dependent: :destroy, foreign_key: :customer_id
-  belongs_to :region
+  belongs_to :region, optional: true
   accepts_nested_attributes_for :addresses
 
   ############## Callbacks #################

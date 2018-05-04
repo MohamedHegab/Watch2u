@@ -19,6 +19,8 @@ class Ability
       can :manage, Address, user_id: user.id
       can :manage, Order, customer_id: user.id
       can :manage, OrderProduct
+      can [:show, :index], Shipping
+      can [:show, :index], Payment
     end
   end
 end

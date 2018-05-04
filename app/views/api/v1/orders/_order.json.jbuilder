@@ -1,4 +1,6 @@
-json.extract! order, :id, :number, :status, :sub_total, :total_price, :created_at, :updated_at
+json.extract! order, :id, :number, :sub_total, :total_price, :created_at, :updated_at
+
+json.status Order.statuses[order.status]
 
 if current_user.has_role? :admin
 	json.customer do
@@ -13,6 +15,8 @@ if current_user.has_role? :admin
 end
 
 json.payment order.payment
+json.shipping order.shipping
+json.address order.address
 
 json.order_products do
   json.array! order.order_products.includes(:product) do |order_product|

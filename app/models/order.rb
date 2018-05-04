@@ -14,7 +14,7 @@
 #
 
 class Order < ApplicationRecord
-	enum status: [ :draft, :pending, :dispatched, :delivered ]
+	enum status: { draft: 0 , pending: 1, dispatched: 2, delivered: 3, canceled: 4 }
 	############ validations ############
 	validates :sub_total, :total_price, numericality: { greater_than_or_equal_to: 0 }
 	validate :sub_total_check

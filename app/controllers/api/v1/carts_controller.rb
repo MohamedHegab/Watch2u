@@ -9,7 +9,7 @@ class Api::V1::CartsController < Api::BaseController
 	def set_order
 		@order = current_user.orders.draft.last
 		unless @order
-	    render_fail('there is no products in cart', nil, nil)
+	    render_fail('there is no products in cart', 8000, nil)
 		end
 	end
 

@@ -21,7 +21,9 @@ json.address order.address
 json.order_products do
   json.array! order.order_products.includes(:product) do |order_product|
   	json.id order_product.id
-  	json.product order_product.product
+  	json.product do
+  		json.partial! "api/v1/products/product", product: order_product.product
+		end
   	json.quantity order_product.quantity
   	json.price order_product.price
   	json.discount order_product.product.discount
